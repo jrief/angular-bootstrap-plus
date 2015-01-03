@@ -461,7 +461,7 @@ gulp.task('copy:pages', function() {
 
 gulp.task('deploy', function () {
     return gulp.src('./dist/**/*')
-        .pipe(deploy(options));
+        .pipe(deploy());
 });
 
 // DEFAULT
