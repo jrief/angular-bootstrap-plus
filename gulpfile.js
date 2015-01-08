@@ -73,7 +73,7 @@ gulp.task('serve', function() {
 
 gulp.task('scripts:dist', function() {
 	//gulp.src(settings.dist, {read: false})
-	//	.pipe(clean());
+	//.pipe(clean());
 	gulp.src(['*/*.js'], {cwd: settings.sources})
 	.pipe(sourcemaps.init())
 	.pipe(annotate())
@@ -123,7 +123,6 @@ function buildModules() {
 		module.js_files = glob.sync(path.join(folder, '*.js'), { cwd: settings.sources })
 		.concat(glob.sync(path.join(folder, '*/*.js'), { cwd: settings.sources }));
 		module.css_files = glob.sync(path.join(folder, '**/*.css'), { cwd: settings.sources });
-		console.log(module.js_files);
 		context.modules.push(module);
 	});
 }

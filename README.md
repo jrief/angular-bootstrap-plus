@@ -3,10 +3,9 @@
 
 ## Getting Started
 
-Download the [production version][min] or the [development version][max].
+Download [Angular-Bootstrap-Plus][bsplus].
 
-[min]: https://raw.github.com/jrief/jquery-angular-bootstrap-plus/master/dist/angular-angular-bootstrap-plus.min.js
-[max]: https://raw.github.com/jrief/jquery-angular-bootstrap-plus/master/dist/angular-angular-bootstrap-plus.js
+[bsplus]: http://jrief.github.io/angular-bootstrap-plus/angular-bootstrap-plus-0.0.1.zip
 
 In your web page:
 
@@ -15,9 +14,19 @@ In your web page:
 <script src="dist/angular-bootstrap-plus.min.js"></script>
 ```
 
-## Documentation
-_(Coming soon)_
+## What is Angular Bootstrap Plus?
+This is a collection of Angular directives for Bootstrap, which neither made it into <a href="http://mgcrea.github.io/angular-strap/" target="_new">Angular Strap</a>,
+nor <a href="http://mgcrea.github.io/angular-strap/"  target="_new">UI Bootstrap.
 
-## Examples
-_(Coming soon)_
+Currently there is only one directive <code>&lt;aw-select&gt;...&lt;/aw-select&gt;</code>, but a
+compatible slider plugin has already been prepared.
 
+The alert reader might note, that a similar directive exists in <strong>Angular Strap</strong>, but
+here one must pass a list of configuration options to this directive. Since I had the need to style
+the internals of the drop down menu using pure HTML, this directive didn't fit.
+
+In <strong>UI Bootstrap</strong> no such directive exists and after
+<a href="https://github.com/angular-ui/bootstrap/issues/2607">offering this module</a> to the
+maintainers, it wasn't accepted. Apparently the UI Bootstrap team wants to follow the same path as
+the Angular Strap team. My intention however is to use as much declarative HTML instead of
+configuration objects.

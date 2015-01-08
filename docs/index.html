@@ -80,6 +80,19 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
+				<h3>What is Angular Bootstrap Plus?</h3>
+				<p>This is a collection of Angular directives for Bootstrap, which neither made it into <a href="http://mgcrea.github.io/angular-strap/" target="_new">Angular Strap</a>,
+				nor <a href="http://mgcrea.github.io/angular-strap/"  target="_new">UI Bootstrap</a>.
+				</p>
+				<p>Currently there is only one directive <code>&lt;aw-select&gt;...&lt;/aw-select&gt;</code>, but a compatible slider plugin has already been prepared.
+				</p>
+				<p>The alert reader might note, that a similar directive exists in <strong>Angular Strap</strong>, but here one must pass a list of
+				configuration options to this directive. Since I had the need to style the internals of the drop down menu using pure HTML, this directive didn't fit.
+				</p>
+				<p>In <strong>UI Bootstrap</strong> no such directive exists and after <a href="https://github.com/angular-ui/bootstrap/issues/2607">offering this module</a>
+				to the maintainers, it wasn't accepted. Appearently the UI Bootstrap team wants to follow the same path as the Angular Strap team. My intention however is to
+				use as much declarative HTML instead of configuration objects.
+				</p>
 				<% modules.forEach(function(module) { %>
 				<section>
 					<%= module.demo_html.join('') %>
