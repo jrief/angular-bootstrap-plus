@@ -1,318 +1,279 @@
-'use strict';
+// Alternative implementation of the <select> element using pure AngularJS
 
-angular.module('mgcrea.ngStrap.select', ['mgcrea.ngStrap.tooltip', 'mgcrea.ngStrap.helpers.parseOptions'])
+angular.module('awesome.select', ['ngSanitize'])
+.directive('awSelect', ['$window', '$compile', function($window, $compile) {
+	return {
+		restrict: 'E',
+		transclude: true,
+		templateUrl: 'select/aw-select.tmpl.html',
+		scope: {model: '=?ngModel', ngChange: '&'},
+		controller: function($scope) {
+			var self = this;
+			$scope.isWorking = false;
+			$scope.showDropdown = false;
+			$scope.optionElements = [];
 
-  .provider('$select', function() {
+			$scope.renderButtonLabels = function() {
+				if ($scope.$parent.hasOwnProperty('renderButtonLabels'))  // TODO: delegated $scope methods must be set explicitly not implicitly
+					return $scope.$parent.renderButtonLabels($scope.buttonLabels, $scope.emptyLabel);
+				if ($scope.buttonLabels.length > 0)
+					return $scope.buttonLabels.join('<span class=sep></span>');
+				return $scope.emptyLabel;
+			};
 
-    var defaults = this.defaults = {
-      animation: 'am-fade',
-      prefixClass: 'select',
-      prefixEvent: '$select',
-      placement: 'bottom-left',
-      template: 'select/select.tpl.html',
-      trigger: 'focus',
-      container: false,
-      keyboard: true,
-      html: false,
-      delay: 0,
-      multiple: false,
-      allNoneButtons: false,
-      sort: true,
-      caretHtml: '&nbsp;<span class="caret"></span>',
-      placeholder: 'Choose among the following...',
-      allText: 'All',
-      noneText: 'None',
-      maxLength: 3,
-      maxLengthHtml: 'selected',
-      iconCheckmark: 'glyphicon glyphicon-ok'
-    };
+			self.addOptionElement = function(element) {
+				$scope.optionElements.push(element);
+			};
 
-    this.$get = function($window, $document, $rootScope, $tooltip, $timeout) {
+			self.deselectAll = function() {
+				angular.forEach($scope.optionElements, function(elem) {
+					elem.removeClass('active');
+				});
+			};
 
-      var bodyEl = angular.element($window.document.body);
-      var isNative = /(ip(a|o)d|iphone|android)/ig.test($window.navigator.userAgent);
-      var isTouch = ('createTouch' in $window.document) && isNative;
+			self.startWorking = function() {
+				$scope.isWorking = true;
+			};
 
-      function SelectFactory(element, controller, config) {
+			self.stopWorking = function() {
+				$scope.ngChange();
+				// test with this: $scope.$apply($scope.ngChange);
+				$scope.isWorking = false;
+			};
 
-        var $select = {};
+			self.selectOption = function(optionElement) {
+				if (self.isMultiple) {
+					optionElement.toggleClass('active');
+				} else {
+					self.deselectAll();
+					optionElement.addClass('active');
+				}
+				self.syncButton(true);
+			};
 
-        // Common vars
-        var options = angular.extend({}, defaults, config);
+			self.syncButton = function(changeModel) {
+				// from the dropdown box settings, build a button whose content reflects the current state
+				var values = [];
+				$scope.buttonLabels = [];
+				angular.forEach($scope.optionElements, function(element) {
+					var acronym, value;
+					if (element.hasClass('active')) {
+						// add option's subelement <acronym>...</acronym> to the list of selected elements
+						acronym = element.find('acronym');
+						if (acronym.length > 0) {
+							$scope.buttonLabels.push(acronym.html());
+						} else {
+							// otherwise, take the whole element's content
+							$scope.buttonLabels.push(element.html());
+						}
+						value = element.attr('value');
+						if (angular.isDefined(value)) {
+							values.push(value);
+						}
+					}
+				});
+				$scope.cssClasses = $scope.isDisabled ? {disabled: 'disabled'} : {};
+				if (changeModel) {
+					$scope.model = self.isMultiple ? values : values.join();
+				}
+			};
 
-        $select = $tooltip(element, options);
-        var scope = $select.$scope;
+			self.syncModel = function() {
+				// from the model settings, set the dropdown box and the button state
+				if (self.isMultiple) {
+					angular.forEach($scope.optionElements, function(elem) {
+						elem.removeClass('active');
+					});
+					angular.forEach($scope.optionElements, function(elem) {
+						if ($scope.model.indexOf(elem.attr('value')) >= 0) {
+							elem.addClass('active');
+						}
+					});
+				} else {
+					angular.forEach($scope.optionElements, function(elem) {
+						elem.removeClass('active');
+						if (elem.attr('value') === $scope.model) {
+							elem.addClass('active');
+						}
+					});
+				}
+				self.syncButton(false);
+			};
 
-        scope.$matches = [];
-        scope.$activeIndex = 0;
-        scope.$isMultiple = options.multiple;
-        scope.$showAllNoneButtons = options.allNoneButtons && options.multiple;
-        scope.$iconCheckmark = options.iconCheckmark;
-        scope.$allText = options.allText;
-        scope.$noneText = options.noneText;
+			self.closeDropdown = function() {
+				$scope.showDropdown = false;
+			};
 
-        scope.$activate = function(index) {
-          scope.$$postDigest(function() {
-            $select.activate(index);
-          });
-        };
+			$scope.toggleDropdown = function($event) {
+				$event.stopPropagation();
+				$scope.showDropdown = !$scope.isDisabled && !$scope.showDropdown;
+			};
 
-        scope.$select = function(index, evt) {
-          scope.$$postDigest(function() {
-            $select.select(index);
-          });
-        };
+			$scope.deselectAll = function() {
+				self.deselectAll();
+				self.closeDropdown();
+				self.syncButton(true);
+			};
 
-        scope.$isVisible = function() {
-          return $select.$isVisible();
-        };
+			$scope.filterOptions = function() {
+				var lcSearchString = angular.lowercase($scope.searchString);
+				if (lcSearchString.length > 0) {
+					angular.forEach($scope.optionElements, function(elem) {
+						var text = elem.clone();
+						text.find('abbr').remove(); // since the <abbr> element doesn't show up in the dropdown box
+						if (angular.lowercase(text.text()).search(lcSearchString) >= 0) {
+							elem.css('display', 'block');
+						} else {
+							elem.css('display', 'none');
+						}
+					});
+				} else {
+					angular.forEach($scope.optionElements, function(elem) {
+						elem.css('display', 'block');
+					});
+				}
+			};
 
-        scope.$isActive = function(index) {
-          return $select.$isActive(index);
-        };
+			$scope.resetFilter = function() {
+				$scope.searchString = '';
+				$scope.filterOptions();
+			};
+		},
+		link: function(scope, element, attrs, controller, transclude) {
+			function addFilterInputElement() {
+				// add a search field to filter options
+				var filterElem;
+				if (!scope.filterPlaceholder)
+					return;
+				filterElem = $compile(
+					'<div class="filter">' +
+						'<input placeholder="{{ filterPlaceholder }}" type="text" ng-change="filterOptions()" ng-model="searchString">' +
+					'<button type="button" class="button reset" ng-click="resetFilter()">&times;</button>' + 
+					'</div>')(scope);
+				angular.forEach(element.find('div'), function(divElem) {
+					if (divElem.attributes.hasOwnProperty('ng-transclude')) {
+						angular.element(divElem).prepend(filterElem);
+					}
+				});
+			}
+			// need some help on transclude. Otherwise the filterElem has to be added to the DOM manually, see above.
+			controller.isMultiple = attrs.hasOwnProperty('multiple');
+			controller.isRequired = attrs.hasOwnProperty('required');
+			scope.name = attrs.hasOwnProperty('name') ? attrs.name : null;
+			scope.emptyLabel = attrs.hasOwnProperty('emptyLabel') ? attrs.emptyLabel : '---';
+			scope.model = controller.isMultiple ? [] : '';
+			scope.isDisabled = attrs.hasOwnProperty('disabled');
+			scope.selectNone = (attrs.hasOwnProperty('selNone') && (!controller.isRequired || controller.isMultiple)) ? attrs.selNone : false;
+			scope.filterPlaceholder = attrs.hasOwnProperty('filter') ? attrs.filter : false;
+			addFilterInputElement();
+			scope.$watch('model', function(newValue, oldValue) {
+				if (!scope.isWorking && !angular.equals(newValue, oldValue)) {
+					controller.syncModel();
+				}
+			});
+			controller.syncButton(true);
+			angular.element($window).on('click', function() {
+				controller.closeDropdown();
+				scope.$apply();
+			});
+		}
+	};
+}])
+.directive('awOptgroup', function() {
+	return {
+		require: ['^awSelect', 'awOptgroup'],
+		restrict: 'E',
+		scope: {},
+		controller: function($scope) {
+			this.optGroupElements = [];
 
-        scope.$selectAll = function () {
-          for (var i = 0; i < scope.$matches.length; i++) {
-            if (!scope.$isActive(i)) {
-              scope.$select(i);
-            }
-          }
-        };
+			this.addOptionElement = function(element) {
+				this.optGroupElements.push(element);
+				this.selectCtrl.addOptionElement(element);
+			};
 
-        scope.$selectNone = function () {
-          for (var i = 0; i < scope.$matches.length; i++) {
-            if (scope.$isActive(i)) {
-              scope.$select(i);
-            }
-          }
-        };
+			this.selectOption = function(optionElement) {
+				if (this.isSingle) {
+					// deactivate all options in the same optgroup
+					angular.forEach(this.optGroupElements, function(elem) {
+						if (angular.equals(optionElement, elem)) {
+							elem.toggleClass('active');
+						} else {
+							elem.removeClass('active');
+						}
+					});
+					this.selectCtrl.syncButton(true);
+				} else {
+					this.selectCtrl.selectOption(optionElement);
+				}
+			};
 
-        // Public methods
+			this.selectGroup = function(optionElement) {
+				if (this.isSelectable) {
+					var allActive = this.allActive = !this.allActive;
+					// activate all options in the same optgroup
+					angular.forEach(this.optGroupElements, function(elem) {
+						allActive ? elem.addClass('active') : elem.removeClass('active');
+					});
+					this.selectCtrl.syncButton(true);
+				}
+			};
+		},
+		link: {
+			pre: function(scope, element, attrs, controllers) {
+				controllers[1].selectCtrl = controllers[0];
+			},
+			post: function(scope, element, attrs, controllers) {
+				var controller = controllers[1];
+				controller.isSingle = attrs.hasOwnProperty('single');
+				controller.isSelectable = attrs.hasOwnProperty('selectable');
+				controller.allActive = false;
+				if (controller.isSelectable) {
+					element.addClass('selectable');
+				}
+				element.on('click', function($event) {
+					var optgroupElement = angular.element($event.target);
+					controller.selectCtrl.startWorking();
+					controller.selectGroup(optgroupElement);
+					scope.$apply();
+					controller.selectCtrl.stopWorking();
+				});
+			}
+		}
+	};
+})
+.directive('awOption', function() {
+	return {
+		require: ['^awSelect', '?^awOptgroup'],
+		restrict: 'E',
+		scope: {},
+		link: function(scope, element, attrs, controllers) {
+			var selectCtrl = controllers[0],
+				parentCtrl = angular.isDefined(controllers[1]) ? controllers[1] : controllers[0],
+				isDisabled = attrs.hasOwnProperty('disabled');
+			parentCtrl.addOptionElement(element);
+			if (attrs.hasOwnProperty('selected')) {
+				element.addClass('active');
+			}
+			if (isDisabled) {
+				element.addClass('disabled');
+			}
+			element.on('click', function($event) {
+				$event.stopPropagation();  // prevents to trigger wrapping handlers
+				if (isDisabled)
+					return;
+				selectCtrl.startWorking();
+				parentCtrl.selectOption(angular.element(this));
+				if (!selectCtrl.isMultiple) {
+					selectCtrl.closeDropdown();
+				}
+				scope.$apply();
+				selectCtrl.stopWorking();
+			});
+		}
+	};
+});
 
-        $select.update = function(matches) {
-          scope.$matches = matches;
-          $select.$updateActiveIndex();
-        };
-
-        $select.activate = function(index) {
-          if(options.multiple) {
-            scope.$activeIndex.sort();
-            $select.$isActive(index) ? scope.$activeIndex.splice(scope.$activeIndex.indexOf(index), 1) : scope.$activeIndex.push(index);
-            if(options.sort) scope.$activeIndex.sort();
-          } else {
-            scope.$activeIndex = index;
-          }
-          return scope.$activeIndex;
-        };
-
-        $select.select = function(index) {
-          var value = scope.$matches[index].value;
-          scope.$apply(function() {
-            $select.activate(index);
-            if(options.multiple) {
-              controller.$setViewValue(scope.$activeIndex.map(function(index) {
-                return scope.$matches[index].value;
-              }));
-            } else {
-              controller.$setViewValue(value);
-              // Hide if single select
-              $select.hide();
-            }
-          });
-          // Emit event
-          scope.$emit(options.prefixEvent + '.select', value, index);
-        };
-
-        // Protected methods
-
-        $select.$updateActiveIndex = function() {
-          if(controller.$modelValue && scope.$matches.length) {
-            if(options.multiple && angular.isArray(controller.$modelValue)) {
-              scope.$activeIndex = controller.$modelValue.map(function(value) {
-                return $select.$getIndex(value);
-              });
-            } else {
-              scope.$activeIndex = $select.$getIndex(controller.$modelValue);
-            }
-          } else if(scope.$activeIndex >= scope.$matches.length) {
-            scope.$activeIndex = options.multiple ? [] : 0;
-          }
-        };
-
-        $select.$isVisible = function() {
-          if(!options.minLength || !controller) {
-            return scope.$matches.length;
-          }
-          // minLength support
-          return scope.$matches.length && controller.$viewValue.length >= options.minLength;
-        };
-
-        $select.$isActive = function(index) {
-          if(options.multiple) {
-            return scope.$activeIndex.indexOf(index) !== -1;
-          } else {
-            return scope.$activeIndex === index;
-          }
-        };
-
-        $select.$getIndex = function(value) {
-          var l = scope.$matches.length, i = l;
-          if(!l) return;
-          for(i = l; i--;) {
-            if(scope.$matches[i].value === value) break;
-          }
-          if(i < 0) return;
-          return i;
-        };
-
-        $select.$onMouseDown = function(evt) {
-          // Prevent blur on mousedown on .dropdown-menu
-          evt.preventDefault();
-          evt.stopPropagation();
-          // Emulate click for mobile devices
-          if(isTouch) {
-            var targetEl = angular.element(evt.target);
-            targetEl.triggerHandler('click');
-          }
-        };
-
-        $select.$onKeyDown = function(evt) {
-          if (!/(9|13|38|40)/.test(evt.keyCode)) return;
-          evt.preventDefault();
-          evt.stopPropagation();
-
-          // Select with enter
-          if(!options.multiple && (evt.keyCode === 13 || evt.keyCode === 9)) {
-            return $select.select(scope.$activeIndex);
-          }
-
-          // Navigate with keyboard
-          if(evt.keyCode === 38 && scope.$activeIndex > 0) scope.$activeIndex--;
-          else if(evt.keyCode === 40 && scope.$activeIndex < scope.$matches.length - 1) scope.$activeIndex++;
-          else if(angular.isUndefined(scope.$activeIndex)) scope.$activeIndex = 0;
-          scope.$digest();
-        };
-
-        // Overrides
-
-        var _show = $select.show;
-        $select.show = function() {
-          _show();
-          if(options.multiple) {
-            $select.$element.addClass('select-multiple');
-          }
-          // use timeout to hookup the events to prevent
-          // event bubbling from being processed imediately.
-          $timeout(function() {
-            $select.$element.on(isTouch ? 'touchstart' : 'mousedown', $select.$onMouseDown);
-            if(options.keyboard) {
-              element.on('keydown', $select.$onKeyDown);
-            }
-          }, 0, false);
-        };
-
-        var _hide = $select.hide;
-        $select.hide = function() {
-          $select.$element.off(isTouch ? 'touchstart' : 'mousedown', $select.$onMouseDown);
-          if(options.keyboard) {
-            element.off('keydown', $select.$onKeyDown);
-          }
-          _hide(true);
-        };
-
-        return $select;
-
-      }
-
-      SelectFactory.defaults = defaults;
-      return SelectFactory;
-
-    };
-
-  })
-
-  .directive('bsSelect', function($window, $parse, $q, $select, $parseOptions) {
-
-    var defaults = $select.defaults;
-
-    return {
-      restrict: 'EAC',
-      require: 'ngModel',
-      link: function postLink(scope, element, attr, controller) {
-
-        // Directive options
-        var options = {scope: scope, placeholder: defaults.placeholder};
-        angular.forEach(['placement', 'container', 'delay', 'trigger', 'keyboard', 'html', 'animation', 'template', 'placeholder', 'multiple', 'allNoneButtons', 'maxLength', 'maxLengthHtml', 'allText', 'noneText'], function(key) {
-          if(angular.isDefined(attr[key])) options[key] = attr[key];
-        });
-
-        // Add support for select markup
-        if(element[0].nodeName.toLowerCase() === 'select') {
-          var inputEl = element;
-          inputEl.css('display', 'none');
-          element = angular.element('<button type="button" class="btn btn-default"></button>');
-          inputEl.after(element);
-        }
-
-        // Build proper ngOptions
-        var parsedOptions = $parseOptions(attr.ngOptions);
-
-        // Initialize select
-        var select = $select(element, controller, options);
-
-        // Watch ngOptions values before filtering for changes
-        var watchedOptions = parsedOptions.$match[7].replace(/\|.+/, '').trim();
-        scope.$watch(watchedOptions, function(newValue, oldValue) {
-          // console.warn('scope.$watch(%s)', watchedOptions, newValue, oldValue);
-          parsedOptions.valuesFn(scope, controller)
-          .then(function(values) {
-            select.update(values);
-            controller.$render();
-          });
-        }, true);
-
-        // Watch model for changes
-        scope.$watch(attr.ngModel, function(newValue, oldValue) {
-          // console.warn('scope.$watch(%s)', attr.ngModel, newValue, oldValue);
-          select.$updateActiveIndex();
-          controller.$render();
-        }, true);
-
-        // Model rendering in view
-        controller.$render = function () {
-          // console.warn('$render', element.attr('ng-model'), 'controller.$modelValue', typeof controller.$modelValue, controller.$modelValue, 'controller.$viewValue', typeof controller.$viewValue, controller.$viewValue);
-          var selected, index;
-          if(options.multiple && angular.isArray(controller.$modelValue)) {
-            selected = controller.$modelValue.map(function(value) {
-              index = select.$getIndex(value);
-              return angular.isDefined(index) ? select.$scope.$matches[index].label : false;
-            }).filter(angular.isDefined);
-            if(selected.length > (options.maxLength || defaults.maxLength)) {
-              selected = selected.length + ' ' + (options.maxLengthHtml || defaults.maxLengthHtml);
-            } else {
-              selected = selected.join(', ');
-            }
-          } else {
-            index = select.$getIndex(controller.$modelValue);
-            selected = angular.isDefined(index) ? select.$scope.$matches[index].label : false;
-          }
-          element.html((selected ? selected : options.placeholder) + defaults.caretHtml);
-        };
-
-        if(options.multiple){
-          controller.$isEmpty = function(value){
-            return !value || value.length === 0;
-          };
-        }
-
-        // Garbage collection
-        scope.$on('$destroy', function() {
-          if (select) select.destroy();
-          options = null;
-          select = null;
-        });
-
-      }
-    };
-
-  });
+(function(angular, undefined) {
+	'use strict';
+})(window.angular);

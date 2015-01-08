@@ -1,11 +1,30 @@
 {
   "name": "angular-bootstrap-plus",
   "version": "0.0.1",
+  "homepage": "https://github.com/jrief/angular-bootstrap-plus",
+  "authors": [
+    "Jacob Rief <jacob.rief@gmail.com>"
+  ],
+  "description": "Additional Angular directives for Bootstrap",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "AngularJS",
+    "Bootstrap",
+    "Select"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-  },
-  "devDependencies": {
-    "angular": "latest",
-    "angular-mocks": "latest",
-    "jquery": "latest"
+    "angular-sanitize": "^1.2.21",
+    "bootstrap": "^3.2.0"
   }
 }

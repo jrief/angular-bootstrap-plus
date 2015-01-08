@@ -1,7 +1,6 @@
 # angular-bootstrap-plus
 
 
-
 ## Getting Started
 
 Download the [production version][min] or the [development version][max].

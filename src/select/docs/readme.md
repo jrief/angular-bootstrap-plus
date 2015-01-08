@@ -1,0 +1,1 @@
+The **select directive** implements an alternative select button with AngularJS

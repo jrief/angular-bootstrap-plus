@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BootstrapPlusDemo" id="top">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>Angular directives for Bootstrap</title>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/<%= bsversion %>/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/demo.css" rel="stylesheet" />
+<% modules.forEach(function(module) {
+	module.css_files.forEach(function(cssfile) { %>
+	<link href="<%= cssfile %>" rel="stylesheet" />
+<%	});
+}); %>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular-touch.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular-sanitize.min.js"></script>
+	<!-- script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.js"></script-->
+	<script src="assets/plunker.js"></script>
+	<!-- script src="assets/smoothscroll-angular-custom.js"></script-->
+<% modules.forEach(function(module) {
+	module.js_files.forEach(function(jsfile) { %>
+	<script src="<%= jsfile %>"></script>
+<%	});
+}); %>
+</head>
+<body class="ng-cloak" xxxng-controller="MainCtrl">
+
+<!--  header class="navbar navbar-default navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand visible-xs" href="#">Angular Bootstrap <strong>+</strong></a>
+			</div>
+		<nav class="hidden-xs">
+			<ul class="nav navbar-nav">
+				<a href="#top" role="button" class="navbar-brand">Angular Bootstrap Plus</a>
+				<li class="dropdown" dropdown>
+					<a role="button" class="dropdown-toggle" dropdown-toggle>Directives <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+					</ul>
+				</li>
+				<li><a href="#getting_started">Getting started</a></li>
+			</ul>
+		</nav>
+		<nav class="visible-xs" collapse="!isCollapsed">
+			<ul class="nav navbar-nav">
+				<li><a href="#getting_started" ng-click="isCollapsed = !isCollapsed">Getting started</a></li>
+				<li><a href="#directives_small" ng-click="isCollapsed = !isCollapsed">Directives</a></li>
+			</ul>
+		</nav>
+		</div>
+	</div>
+</header>
+<div class="header-placeholder"></div -->
+
+<div role="main">
+	<header class="bs-header text-center" id="overview">
+		<div class="container">
+			<h1>Angular Bootstrap Plus</h1>
+			<p>
+				<a class="btn btn-outline-inverse btn-lg" href="https://github.com/jrief/angular-bootstrap-plus">
+					<i class="fa fa-github"></i> Code on Github
+				</a>
+				<a class="btn btn-outline-inverse btn-lg" href="<%= archivename %>">
+					<i class="fa fa-download"></i> Download Package
+				</a>
+			</p>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<% modules.forEach(function(module) { %>
+				<section>
+					<%= module.demo_html.join('') %>
+				</section>
+				<% }); %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer">
+	<div class="container">
+		<p>Designed and built by <a href="https://github.com/angular-ui?tab=members" target="_blank">Angular-UI team</a> and <a href="https://github.com/angular-ui/bootstrap/graphs/contributors" target="_blank">contributors</a>.</p>
+		<p>Code licensed under <a href="https://github.com/angular-ui/bootstrap/blob/master/LICENSE"><%= pkg.license %> License</a>.</p>
+		<p><a href="https://github.com/angular-ui/bootstrap/issues?state=open">Issues</a></p>
+	</div>
+</footer>
+
+</body>
+</html>
