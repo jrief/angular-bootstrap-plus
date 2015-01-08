@@ -5,17 +5,14 @@
   "authors": [
     "Jacob Rief <jacob.rief@gmail.com>"
   ],
-  "description": "Additional Angular directives for Bootstrap",
-  "moduleType": [
-    "node"
-  ],
+  "description": "Additional directives for Angular with Bootstrap",
   "keywords": [
     "AngularJS",
-    "Bootstrap",
-    "Select"
+    "directives",
+    "select",
+    "Bootstrap"
   ],
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
