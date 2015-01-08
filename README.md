@@ -10,8 +10,11 @@ Download [Angular-Bootstrap-Plus][bsplus].
 In your web page:
 
 ```html
-<script src="angular.js"></script>
-<script src="dist/angular-bootstrap-plus.min.js"></script>
+<link href="angular-bootstrap-plus.min.css" rel="stylesheet" />
+
+<script src="angular.js" type="text/javascript"></script>
+<script src="angular-sanizize.js" type="text/javascript"></script>
+<script src="angular-bootstrap-plus.min.js" type="text/javascript"></script>
 ```
 
 ## What is Angular Bootstrap Plus?
