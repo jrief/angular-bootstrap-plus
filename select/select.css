@@ -1,0 +1,109 @@
+aw-select {
+	position: relative;
+	white-space: nowrap;
+}
+aw-select .button {
+	padding: 1px 8px 1px 8px;
+	font-size: 14px;
+	height: 34px;
+	border: 1px solid #c6c6c6;
+	border-radius: 4px;
+	white-space: normal;
+	background-color: #eee;
+	background-image: linear-gradient(#fff, #ddd);
+}
+aw-select .button.disabled  {
+	color: #a0a0a0;
+}
+aw-select .button:focus {
+	outline: none;
+}
+aw-select span.sep {
+  display: inline-block;
+  width: 10px;
+}
+aw-select img {
+	height: 22px;
+	width: 22px;
+	margin: 0 5px 0 0;
+}
+aw-select .aw-wrapper {
+	position: absolute;
+	z-index: 999;
+	left: 0;
+}
+aw-select .filter {
+	position: relative;
+}
+aw-select .filter input {
+	display: block;
+	width: 100%;
+	padding: 5px 10px;
+	border: 1px solid #c6c6c6;
+	border-radius: 4px;
+}
+aw-select .filter .reset {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-weight: bold;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	line-height: 100%;
+}
+aw-select .aw-container {
+	background-color: #fff;
+	border: 1px solid #c6c6c6;
+	border-radius: 4px;
+	margin-top: 4px;
+}
+aw-select .aw-container hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+aw-select aw-option, aw-select aw-default-option {
+	position: relative;
+	display: block;
+	padding: 5px 5px 5px 30px;
+	margin: 0;
+}
+aw-select aw-option abbr {
+	display: none;
+}
+aw-select .selected::before {
+	content: "\2714";
+	position: absolute;
+	top: 5px;
+	left: 10px;
+}
+aw-option, aw-default-option  {
+	background-color: #fff;
+	cursor: pointer;
+}
+aw-option.disabled, aw-option.disabled:hover  {
+	color: #a0a0a0;
+	cursor: default;
+	background-color: #fff;
+}
+aw-option:hover, aw-default-option:hover  {
+	background-color: whitesmoke;
+}
+aw-optgroup {
+	display: block;
+	padding: 2px 2px 0;
+	background-color: whitesmoke;
+	border-top: 1px solid #cccccc;
+}
+aw-optgroup:first-child {
+	border-top: none;
+}
+aw-optgroup > h3, aw-optgroup > h4, aw-optgroup > h5, aw-optgroup > h6 {
+	padding-left: 10px;
+}
+aw-optgroup:hover {
+	background-color: whitesmoke;
+}
+aw-optgroup.selectable {
+	cursor: pointer;
+}

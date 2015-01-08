@@ -1,0 +1,11 @@
+<button type="button" class="button" ng-click="toggleDropdown($event)" ng-class="cssClasses">
+	<span ng-bind-html="buttonLabels.join('<span class=sep></span>') || emptyLabel"></span>
+	<span class="caret"></span>
+	<input ng-if="name" type="hidden" name="{{ name }}" value="{{ model }}" />
+</button>
+<div class="aw-wrapper" ng-show="showDropdown" ng-click="$event.stopPropagation()">
+	<div class="aw-container">
+		<aw-default-option ng-if="selectNone" ng-click="deselectAll()">{{ selectNone }}</aw-default-option>
+		<div ng-transclude></div>
+	</div>
+</div>
