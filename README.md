@@ -15,10 +15,11 @@ In your web page:
 ```
 
 ## What is Angular Bootstrap Plus?
-This is a collection of Angular directives for Bootstrap, which neither made it into <a href="http://mgcrea.github.io/angular-strap/" target="_new">Angular Strap</a>,
-nor <a href="http://mgcrea.github.io/angular-strap/"  target="_new">UI Bootstrap.
+This is a collection of Angular directives for Bootstrap, which neither made it into
+<a href="http://mgcrea.github.io/angular-strap/" target="_new">Angular Strap</a>,
+nor into <a href="http://angular-ui.github.io/bootstrap/"  target="_new">UI Bootstrap.
 
-Currently there is only one directive <code>&lt;aw-select&gt;...&lt;/aw-select&gt;</code>, but a
+Currently there is only one directive <code>&lt;bsp-select&gt;...&lt;/bsp-select&gt;</code>, but a
 compatible slider plugin has already been prepared.
 
 The alert reader might note, that a similar directive exists in <strong>Angular Strap</strong>, but

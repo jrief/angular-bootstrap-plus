@@ -29,7 +29,7 @@ var settings = {
 };
 
 var context = {
-	ngversion: '1.2.16',
+	ngversion: '1.2.28',
 	bsversion: '3.1.1',
 	pkg: pkg,
 	archivename: pkg.name + '-' + pkg.version + '.zip'
