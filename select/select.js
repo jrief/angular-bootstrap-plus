@@ -1,11 +1,12 @@
 // Alternative implementation of the <select> element using pure AngularJS
 
-angular.module('awesome.select', ['ngSanitize'])
-.directive('awSelect', ['$window', '$compile', function($window, $compile) {
+angular.module('bs-plus.select', ['ngSanitize'])
+.directive('bspSelect', ['$window', '$compile', function($window, $compile) {
+	console.log('bspSelect module');
 	return {
 		restrict: 'E',
 		transclude: true,
-		templateUrl: 'select/aw-select.tmpl.html',
+		templateUrl: 'select/bsp-select.tmpl.html',
 		scope: {model: '=?ngModel', ngChange: '&'},
 		controller: function($scope) {
 			var self = this;
@@ -179,9 +180,9 @@ angular.module('awesome.select', ['ngSanitize'])
 		}
 	};
 }])
-.directive('awOptgroup', function() {
+.directive('bspOptgroup', function() {
 	return {
-		require: ['^awSelect', 'awOptgroup'],
+		require: ['^bspSelect', 'bspOptgroup'],
 		restrict: 'E',
 		scope: {},
 		controller: function($scope) {
@@ -242,9 +243,9 @@ angular.module('awesome.select', ['ngSanitize'])
 		}
 	};
 })
-.directive('awOption', function() {
+.directive('bspOption', function() {
 	return {
-		require: ['^awSelect', '?^awOptgroup'],
+		require: ['^bspSelect', '?^bspOptgroup'],
 		restrict: 'E',
 		scope: {},
 		link: function(scope, element, attrs, controllers) {

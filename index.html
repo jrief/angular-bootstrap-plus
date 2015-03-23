@@ -12,9 +12,9 @@
 	<link href="select/select.css" rel="stylesheet" />
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-touch.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-touch.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-sanitize.min.js"></script>
 	<!-- script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.js"></script-->
 	<script src="assets/plunker.js"></script>
 	<!-- script src="assets/smoothscroll-angular-custom.js"></script-->
@@ -81,17 +81,23 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h2>What is Angular Bootstrap Plus?</h2>
-				<p>It's a collection of AngularJS directives for Bootstrap, which neither made it into <a href="http://mgcrea.github.io/angular-strap/" target="_new">Angular Strap</a>,
-				nor into <a href="http://mgcrea.github.io/angular-strap/"  target="_new">UI Bootstrap</a>.
+				<p>It's a collection of AngularJS directives for Bootstrap, which neither made it into
+				<a href="http://mgcrea.github.io/angular-strap/" target="_new">Angular Strap</a>,
+				nor into <a href="http://angular-ui.github.io/bootstrap/" target="_new">UI Bootstrap</a>.
 				</p>
-				<p>Currently there is only one directive <code>&lt;aw-select&gt;...&lt;/aw-select&gt;</code>, but a compatible slider plugin has already been prepared.
+				<p>Currently there is only one directive <code>&lt;bsp-select&gt;...&lt;/bsp-select&gt;</code>,
+				but a compatible slider plugin has already been prepared.
 				</p>
-				<p>The alert reader might note, that a similar directive exists in <strong>Angular Strap</strong>, but here one must pass a list of
-				configuration options to this directive. Since I had the need to style the internals of the drop down menu using pure HTML, this directive didn't fit.
+				<p>The alert reader might note, that a similar directive exists in
+				<strong>Angular Strap</strong>, but here one must pass a list of configuration
+				options to this directive. Since I had the need to style the internals of the drop
+				down menu using pure HTML, this directive didn't fit.
 				</p>
-				<p>In <strong>UI Bootstrap</strong> no such directive exists and after <a href="https://github.com/angular-ui/bootstrap/issues/2607">offering this module</a>
-				to the maintainers, it wasn't accepted. Appearently the UI Bootstrap team wants to follow the same path as the Angular Strap team. My intention however is to
-				use as much declarative HTML instead of configuration objects.
+				<p>In <strong>UI Bootstrap</strong> no such directive exists and after
+				<a href="https://github.com/angular-ui/bootstrap/issues/2607">proposing this module</a>
+				to the maintainers, it was rejected. Appearently the UI Bootstrap team wants to
+				follow the same path as the Angular Strap team. My intention however is to use as
+				much declarative HTML instead of configuration objects.
 				</p>
 				
 				<hr />
@@ -106,40 +112,40 @@ Therefore I decided to write my own version of it.
 </p>
 <div ng-controller="DummySelectDemoCtrl">
 	<h3>Single option <small>without default</small></h3>
-	<aw-select ng-model="browser" required>
-		<aw-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</aw-option>
-		<aw-option value="ie" selected><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</aw-option>
-		<aw-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</aw-option>
-		<aw-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</aw-option>
-		<aw-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</aw-option>
-	</aw-select>
+	<bsp-select ng-model="browser" required>
+		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
+		<bsp-option value="ie" selected><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</bsp-option>
+		<bsp-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</bsp-option>
+		<bsp-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</bsp-option>
+	</bsp-select>
 	<h5>Controller's scope:</h5>
 	<pre>{{ browser }}</pre>
 	<ol>
-		<li>Here <code>&lt;aw-select&gt;</code> replaces the common HTML tag <code>&lt;select&gt;</code>.</li>
+		<li>Here <code>&lt;bsp-select&gt;</code> replaces the common HTML tag <code>&lt;select&gt;</code>.</li>
 		<li>In a AngularJS controller, bind a model using <code>ng-model="browser"</code> to the local scope.</li>
-		<li>Options are added using the HTML tag <code>&lt;aw-option&gt;</code>.</li>
-		<li>To pre-select an <code>&lt;aw-option&gt;</code> element, add the attribute <code>selected</code> to its HTML tag.</li>
-		<li>For a selected <code>&lt;aw-option&gt;</code>, the value of attribute <code>value</code> is set to the scope's model (here <code>browser</code>).
+		<li>Options are added using the HTML tag <code>&lt;bsp-option&gt;</code>.</li>
+		<li>To pre-select an <code>&lt;bsp-option&gt;</code> element, add the attribute <code>selected</code> to its HTML tag.</li>
+		<li>For a selected <code>&lt;bsp-option&gt;</code>, the value of attribute <code>value</code> is set to the scope's model (here <code>browser</code>).
 	</ol>
 </div>
 <hr/>
 
 <div ng-controller="DummySelectDemoCtrl">
 	<h3>Single option <small>with default value and search field</small></h3>
-	<aw-select ng-model="browser" empty-label="Select me" filter="Filter ...">
-		<aw-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</aw-option>
-		<aw-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</aw-option>
-		<aw-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</aw-option>
-		<aw-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</aw-option>
-		<aw-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</aw-option>
-	</aw-select>
+	<bsp-select ng-model="browser" empty-label="Select me" filter="Filter ...">
+		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
+		<bsp-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</bsp-option>
+		<bsp-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</bsp-option>
+		<bsp-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</bsp-option>
+	</bsp-select>
 	<h5>Controller's scope:</h5>
 	<pre>{{ browser }}</pre>
 	<ol>
 		<li>With <code>empty-label="Select me"</code>, one can override the label, when no option has been selectd.</li>
 		<li>Since the attribute <code>required</code> is missing, this empty label is added as extra option named &ldquo;Select me&rdquo;, which can be used to deselect all options.</li>
-		<li>By adding the attribute <code>filter="Filter ..."</code> to the <code>&lt;aw-select&gt;</code> element, a user can search for options containing that string.
+		<li>By adding the attribute <code>filter="Filter ..."</code> to the <code>&lt;bsp-select&gt;</code> element, a user can search for options containing that string.
 		This is useful for long lists of options.</li>
 	</ol>
 </div>
@@ -147,39 +153,39 @@ Therefore I decided to write my own version of it.
 
 <h3>Using in HTML forms</h3>
 <form name="my_form" action="http://www.w3schools.com/jsref/demo_post_enctype.asp" method="post" target="_new">
-	<aw-select empty-label="Select Browser" name="select_browser">
-		<aw-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</aw-option>
-		<aw-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</aw-option>
-		<aw-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</aw-option>
-		<aw-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</aw-option>
-		<aw-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</aw-option>
-	</aw-select>
+	<bsp-select empty-label="Select Browser" name="select_browser">
+		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
+		<bsp-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</bsp-option>
+		<bsp-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</bsp-option>
+		<bsp-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</bsp-option>
+	</bsp-select>
 	<input type="submit" button class="btn btn-primary btn-sm" />
 </form>
 <ol>
-	<li>Here <code>&lt;aw-select&gt;</code> is used without an AngularJS controller, instead its selection is available through a HTML <code>&lt;form&gt;</code> element.</li>
-	<li>Submitting <code>&lt;aw-select&gt;</code> via a <code>&lt;form&gt;</code> element, requires to add the attribute <code>name</code>, otherwise the browser does not know how to encode the POST data.</li>
+	<li>Here <code>&lt;bsp-select&gt;</code> is used without an AngularJS controller, instead its selection is available through a HTML <code>&lt;form&gt;</code> element.</li>
+	<li>Submitting <code>&lt;bsp-select&gt;</code> via a <code>&lt;form&gt;</code> element, requires to add the attribute <code>name</code>, otherwise the browser does not know how to encode the POST data.</li>
 	<li>Try to submit the form and check the <em>x-www-form-urlencoded</em> data received by another server. The received POST data is shown in a new window.</li>
 </ol>
 <hr/>
 
 <div ng-controller="DummySelectDemoCtrl">
 	<h3>Multiple options</h3>
-	<aw-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20">
-		<aw-option value="opera"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png"><abbr>Op</abbr></acronym>Opera</aw-option>
-		<aw-option value="ie"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png"><abbr>IE</abbr></acronym>Internet Explorer</aw-option>
-		<aw-option value="firefox"><acronym><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png"><abbr>FF</abbr></acronym>Firefox</aw-option>
-		<aw-option value="safari" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png"><abbr>Sa</abbr></acronym>Safari</aw-option>
-		<aw-option value="chrome" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png"><abbr>Ch</abbr></acronym>Chrome</aw-option>
-	</aw-select>
+	<bsp-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20">
+		<bsp-option value="opera"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png"><abbr>Op</abbr></acronym>Opera</bsp-option>
+		<bsp-option value="ie"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png"><abbr>IE</abbr></acronym>Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><acronym><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png"><abbr>FF</abbr></acronym>Firefox</bsp-option>
+		<bsp-option value="safari" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png"><abbr>Sa</abbr></acronym>Safari</bsp-option>
+		<bsp-option value="chrome" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png"><abbr>Ch</abbr></acronym>Chrome</bsp-option>
+	</bsp-select>
 	<h5>Controller's scope:</h5>
 	<pre>{{ browser }}</pre>
 	<ol>
-		<li>By adding the attribute <code>multiple</code> to an <code>&lt;aw-select&gt;</code> element, a user can select more than one option.</li>
+		<li>By adding the attribute <code>multiple</code> to an <code>&lt;bsp-select&gt;</code> element, a user can select more than one option.</li>
 		<li>The content of each <em>selected</em> option is displayed inside the pulldown buttom. Since this might consume too much of the button's area, the labels
-		inside the <code>&lt;aw-option&gt;</code> element's can be abbrevated: Then only the content of a <code>&lt;acronym&gt;</code> element is shown inside the button.
+		inside the <code>&lt;bsp-option&gt;</code> element's can be abbrevated: Then only the content of a <code>&lt;acronym&gt;</code> element is shown inside the button.
 		Optionally one may use the <code>&lt;abbr&gt;</code> element to show an abbrevated version of the options label. This content then is shown in the select button,
-		but not in the <code>&lt;aw-option&gt;</code> element.</li>
+		but not in the <code>&lt;bsp-option&gt;</code> element.</li>
 		<li>In the select button, labels of selected options are separated using a comma: <code>, </code>. This can be overriden by using the attribute <code>separator</code>.
 		Special charaters inside the separator attribute, such as spaces, must be URI encoded. In doubt, use the Javascript function <code>encodeURI()</code>. 
 	</ol>
@@ -188,29 +194,29 @@ Therefore I decided to write my own version of it.
 
 <div ng-controller="DummySelectDemoCtrl">
 	<h3>Multiple options <small>using option groups</small></h3>
-	<aw-select multiple ng-model="browser" empty-label="Select me" separator="%20%20%20" filter="Filter ...">
-		<aw-optgroup>All Web Browsers
-			<aw-optgroup selectable>Modern Web Browsers
-				<aw-option value="opera"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png"><abbr>Op</abbr></acronym>Opera</aw-option>
-				<aw-option value="ie"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png"><abbr>IE</abbr></acronym>Internet Explorer</aw-option>
-				<aw-option value="firefox"><acronym><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png"><abbr>FF</abbr></acronym>Firefox</aw-option>
-				<aw-option value="safari" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png"><abbr>Sa</abbr></acronym>Safari</aw-option>
-				<aw-option value="chrome" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png"><abbr>Ch</abbr></acronym>Chrome</aw-option>
-			</aw-optgroup>
-			<aw-optgroup single>Classic Web Browsers
-				<aw-option value="netscape"><acronym><img src="//www.ucdmc.ucdavis.edu/apps/error/nojavascript/images/netscape_icon.jpg"><abbr>NS</abbr></acronym>Netscape Navigator</aw-option>
-				<aw-option value="mosaic"><acronym><img src="//magliery.com/MosaicLogo/Images/th-winspin.gif"><abbr>M</abbr></acronym>Mosaic Browser</aw-option>
-				<aw-option value="amaya"><acronym><img src="//upload.wikimedia.org/wikipedia/en/thumb/f/f4/Amaya_logo_65x50.png/48px-Amaya_logo_65x50.png"><abbr>Ay</abbr></acronym>Amaya</aw-option>
-			</aw-optgroup>
-		</aw-optgroup>
-	</aw-select>
+	<bsp-select multiple ng-model="browser" empty-label="Select me" separator="%20%20%20" filter="Filter ...">
+		<bsp-optgroup>All Web Browsers
+			<bsp-optgroup selectable>Modern Web Browsers
+				<bsp-option value="opera"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png"><abbr>Op</abbr></acronym>Opera</bsp-option>
+				<bsp-option value="ie"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png"><abbr>IE</abbr></acronym>Internet Explorer</bsp-option>
+				<bsp-option value="firefox"><acronym><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png"><abbr>FF</abbr></acronym>Firefox</bsp-option>
+				<bsp-option value="safari" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png"><abbr>Sa</abbr></acronym>Safari</bsp-option>
+				<bsp-option value="chrome" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png"><abbr>Ch</abbr></acronym>Chrome</bsp-option>
+			</bsp-optgroup>
+			<bsp-optgroup single>Classic Web Browsers
+				<bsp-option value="netscape"><acronym><img src="//www.ucdmc.ucdavis.edu/apps/error/nojavascript/images/netscape_icon.jpg"><abbr>NS</abbr></acronym>Netscape Navigator</bsp-option>
+				<bsp-option value="mosaic"><acronym><img src="//magliery.com/MosaicLogo/Images/th-winspin.gif"><abbr>M</abbr></acronym>Mosaic Browser</bsp-option>
+				<bsp-option value="amaya"><acronym><img src="//upload.wikimedia.org/wikipedia/en/thumb/f/f4/Amaya_logo_65x50.png/48px-Amaya_logo_65x50.png"><abbr>Ay</abbr></acronym>Amaya</bsp-option>
+			</bsp-optgroup>
+		</bsp-optgroup>
+	</bsp-select>
 	<h5>Controller's scope:</h5>
 	<pre>{{ browser }}</pre>
 	<ol>
-		<li>For better organization, <code>&lt;aw-option&gt;</code> elements can be grouped together by putting them into a <code>&lt;aw-optgroup&gt;</code> element.</li>
-		<li>Grouped <code>&lt;aw-option&gt;</code> elements do not change behaviour, except for optaining two additional features:</li>
-		<li>By adding the attribute <code>selectable</code> to an <code>&lt;aw-optgroup&gt;</code> element, a user can turn on and off all options of that group, by clicking on the groups title.</li>
-		<li>Adding the attribute <code>single</code> to an <code>&lt;aw-optgroup&gt;</code> element, allows to select only <em>one</em> option of that group.</li>
+		<li>For better organization, <code>&lt;bsp-option&gt;</code> elements can be grouped together by putting them into a <code>&lt;bsp-optgroup&gt;</code> element.</li>
+		<li>Grouped <code>&lt;bsp-option&gt;</code> elements do not change behaviour, except for optaining two additional features:</li>
+		<li>By adding the attribute <code>selectable</code> to an <code>&lt;bsp-optgroup&gt;</code> element, a user can turn on and off all options of that group, by clicking on the groups title.</li>
+		<li>Adding the attribute <code>single</code> to an <code>&lt;bsp-optgroup&gt;</code> element, allows to select only <em>one</em> option of that group.</li>
 	</ol>
 </div>
 <hr/>
@@ -219,13 +225,13 @@ Therefore I decided to write my own version of it.
 <div ng-controller="AlertSelectDemoCtrl">
 	<p>Add a callback function to the parent controller with <code>ng-change="browserChanged()"</code>. This will be fired
 	whenever the select box changes its value.</p>
-	<aw-select ng-model="browser" empty-label="Select me" required ng-change="browserChanged()">
-		<aw-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</aw-option>
-		<aw-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</aw-option>
-		<aw-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</aw-option>
-		<aw-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</aw-option>
-		<aw-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</aw-option>
-	</aw-select>
+	<bsp-select ng-model="browser" empty-label="Select me" required ng-change="browserChanged()">
+		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
+		<bsp-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</bsp-option>
+		<bsp-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</bsp-option>
+		<bsp-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</bsp-option>
+	</bsp-select>
 </div>
 <hr/>
 <div ng-controller="ActivateSelectDemoCtrl">
@@ -238,17 +244,17 @@ Therefore I decided to write my own version of it.
 		<li ng-click="setBrowser('safari')">Set Safari</li>
 		<li ng-click="setBrowser('chrome')">Set Chrome</li>
 	</ul>
-	<aw-select ng-model="browser" empty-label="Select me" required>
-		<aw-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</aw-option>
-		<aw-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</aw-option>
-		<aw-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</aw-option>
-		<aw-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</aw-option>
-		<aw-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</aw-option>
-	</aw-select>
+	<bsp-select ng-model="browser" empty-label="Select me" required>
+		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
+		<bsp-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</bsp-option>
+		<bsp-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</bsp-option>
+		<bsp-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</bsp-option>
+	</bsp-select>
 </div>
 <hr/>
 <div ng-controller="MultipleSelectDemoCtrl">
-	<p>Changing the model array in the parent's controller for a <code>&lt;aw-select multiple&gt;</code> element, also changes the state of the select box.<br/>
+	<p>Changing the model array in the parent's controller for a <code>&lt;bsp-select multiple&gt;</code> element, also changes the state of the select box.<br/>
 	Click onto some of the list items below.</p>
 	<ul>
 		<li ng-click="toggleBrowser('opera')">Toggle Opera</li>
@@ -257,34 +263,34 @@ Therefore I decided to write my own version of it.
 		<li ng-click="toggleBrowser('safari')">Toggle Safari</li>
 		<li ng-click="toggleBrowser('chrome')">Toggle Chrome</li>
 	</ul>
-	<aw-select ng-model="browsers" multiple empty-label="Select me">
-		<aw-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</aw-option>
-		<aw-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</aw-option>
-		<aw-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</aw-option>
-		<aw-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</aw-option>
-		<aw-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</aw-option>
-	</aw-select>
+	<bsp-select ng-model="browsers" multiple empty-label="Select me">
+		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
+		<bsp-option value="ie"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</bsp-option>
+		<bsp-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</bsp-option>
+		<bsp-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</bsp-option>
+	</bsp-select>
 </div>
 <hr/>
 <h3>Other Features</h3>
 <div>
-	<aw-select ng-model="browser" empty-label="Select me" required>
-		<aw-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</aw-option>
-		<aw-option value="ie" disabled><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</aw-option>
-		<aw-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</aw-option>
+	<bsp-select ng-model="browser" empty-label="Select me" required>
+		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
+		<bsp-option value="ie" disabled><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png">Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png">Firefox</bsp-option>
 		<hr/>
-		<aw-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</aw-option>
-		<aw-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</aw-option>
-	</aw-select>
+		<bsp-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</bsp-option>
+		<bsp-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</bsp-option>
+	</bsp-select>
 	<ol>
-		<li>To disable an <code>&lt;aw-option&gt;</code> element, add the attribute <code>disabled</code> to its HTML tag.</li>
+		<li>To disable an <code>&lt;bsp-option&gt;</code> element, add the attribute <code>disabled</code> to its HTML tag.</li>
 		<li>Add any extra HTML elements to the list of options. Here a <code>&lt;hr&gt;</code> element separates Webkit based browsers from the rest of the world.</li>
 	</ol>
 </div>
 <hr>
 <div>
-	<p>Of course, also the whole <code>&lt;aw-select&gt;</code> element can be disabled by adding the attribute <code>disabled</code>.</p>
-	<aw-select ng-model="browser" empty-label="Select me" disabled></aw-select>
+	<p>Of course, also the whole <code>&lt;bsp-select&gt;</code> element can be disabled by adding the attribute <code>disabled</code>.</p>
+	<bsp-select ng-model="browser" empty-label="Select me" disabled></bsp-select>
 </div>
 				</section>
 				
