@@ -2,7 +2,6 @@
 
 angular.module('bs-plus.select', ['ngSanitize'])
 .directive('bspSelect', ['$window', '$compile', function($window, $compile) {
-	console.log('bspSelect module');
 	return {
 		restrict: 'E',
 		transclude: true,
