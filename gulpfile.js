@@ -2,8 +2,8 @@
 
 var gulp = require('gulp');
 var path = require('path');
+var del = require('del');
 var gutil = require('gulp-util');
-var clean = require('gulp-clean');
 var rename = require('gulp-rename');
 var pkg = require('./package.json');
 var chalk = require('chalk');
@@ -25,6 +25,7 @@ var settings = {
 	sources: './src',
 	docs: './docs',
 	dist: './dist',
+	pkgname: 'bootstrap-plus',
 	pages: './pages'
 };
 
@@ -71,13 +72,19 @@ gulp.task('serve', function() {
 });
 
 
+function buildDistPath(src) {
+	return '// Source: ' + path.basename(this.path) + '\n' + (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+}
+
+
 gulp.task('scripts:dist', function() {
-	//gulp.src(settings.dist, {read: false})
-	//.pipe(clean());
+	console.log(settings.dist);
+	//del([settings.dist]);
 	gulp.src(['*/*.js'], {cwd: settings.sources})
 	.pipe(sourcemaps.init())
 	.pipe(annotate())
-	.pipe(concat(pkg.name + '.js', {process: function(src) { return '// Source: ' + path.basename(this.path) + '\n' + (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1'); }}))
+	//.pipe(concat(pkg.name + '.js', {process: buildDistPath}))
+	.pipe(concat(settings.pkgname, {process: buildDistPath}))
 	.pipe(concat.header('(function(window, document, undefined) {\n\'use strict\';\n'))
 	.pipe(concat.footer('\n})(window, document);\n'))
 	.pipe(concat.header(banner))
@@ -90,7 +97,7 @@ gulp.task('scripts:dist', function() {
 
 	gulp.src(['*/*.css'], {cwd: settings.sources})
 	.pipe(sourcemaps.init())
-	.pipe(concat(pkg.name + '.css'))
+	.pipe(concat(settings.pkgname + '.css'))
 	.pipe(gulp.dest(settings.dist))
 	.pipe(rename(function(path) { path.extname = '.min.css'; }))
 	.pipe(cssmin())
