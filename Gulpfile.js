@@ -20,6 +20,8 @@ var annotate = require('gulp-ng-annotate');
 var concat = require('gulp-concat-util');
 var sourcemaps = require('gulp-sourcemaps');
 var zip = require('gulp-zip');
+var markdown = require('gulp-markdown');
+var sass = require('gulp-sass');
 
 var settings = {
 	sources: './src',
@@ -45,15 +47,19 @@ var banner = gutil.template('/**\n' +
 	' */\n', {file: '', pkg: pkg, today: new Date().toISOString().substr(0, 10)}
 );
 
-gulp.task('scripts:pages', function() {
+gulp.task('watch', function() {
 	gulp.watch(path.join(settings.sources, '**/*'), function() {
-		buildModules();
+		buildDist();
 		buildPages();
 	});
 	gulp.watch(path.join(settings.docs, '**/*'), function() {
 		buildPages();
 	});
+	gulp.watch('README.md', function() {
+		buildPages();
+	});
 	buildModules();
+	buildDist();
 	buildPages();
 });
 
@@ -63,7 +69,7 @@ gulp.task('deploy', function() {
 });
 
 
-gulp.task('serve', function() {
+gulp.task('serve', ['watch'], function() {
 	connect.server({
 		root: [settings.pages],
 		port: 9090,
@@ -72,19 +78,21 @@ gulp.task('serve', function() {
 });
 
 
-function buildDistPath(src) {
-	return '// Source: ' + path.basename(this.path) + '\n' + (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
-}
+gulp.task('clean', function() {
+	del([settings.dist]);
+});
 
+gulp.task('dist', buildDist);
 
-gulp.task('scripts:dist', function() {
-	console.log(settings.dist);
-	//del([settings.dist]);
+function buildDist() {
+	function buildDistPath(src) {
+		return '// Source: ' + path.basename(this.path) + '\n' + (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+	}
+	console.log('build dist');
 	gulp.src(['*/*.js'], {cwd: settings.sources})
 	.pipe(sourcemaps.init())
 	.pipe(annotate())
-	//.pipe(concat(pkg.name + '.js', {process: buildDistPath}))
-	.pipe(concat(settings.pkgname, {process: buildDistPath}))
+	.pipe(concat(settings.pkgname + '.js', {process: buildDistPath}))
 	.pipe(concat.header('(function(window, document, undefined) {\n\'use strict\';\n'))
 	.pipe(concat.footer('\n})(window, document);\n'))
 	.pipe(concat.header(banner))
@@ -95,8 +103,13 @@ gulp.task('scripts:dist', function() {
 	.pipe(sourcemaps.write('./'))
 	.pipe(gulp.dest(settings.dist));
 
-	gulp.src(['*/*.css'], {cwd: settings.sources})
+//	gulp.src(['*/*.scss'], {cwd: settings.sources})
+//	.pipe(sass())
+//	.pipe(gulp.dest('.css'));
+
+	gulp.src(['*/*.scss'], {cwd: settings.sources})
 	.pipe(sourcemaps.init())
+	.pipe(sass({errLogToConsole: true}))
 	.pipe(concat(settings.pkgname + '.css'))
 	.pipe(gulp.dest(settings.dist))
 	.pipe(rename(function(path) { path.extname = '.min.css'; }))
@@ -110,7 +123,7 @@ gulp.task('scripts:dist', function() {
 	gulp.src(path.join(settings.dist, '**/*'))
 	.pipe(zip(context.archivename))
 	.pipe(gulp.dest(settings.pages));
-});
+}
 
 function buildModules() {
 	var folders = getFolders(settings.sources);
@@ -132,9 +145,18 @@ function buildModules() {
 		module.css_files = glob.sync(path.join(folder, '**/*.css'), { cwd: settings.sources });
 		context.modules.push(module);
 	});
+	//console.log(context);
 }
 
 function buildPages() {
+	console.log('build pages');
+
+	// convert README.md into HTML snippet to be used inside index.html
+	var readme = gulp.src('README.md').pipe(markdown());
+	readme.on('data', function(chunk) {
+		context.readme_html = chunk.contents.toString().trim();
+	});
+
 	// create the main index.html file
 	gulp.src(path.join(settings.docs, 'index.html'))
 	.pipe(consolidate('lodash', context))
@@ -144,6 +166,10 @@ function buildPages() {
 	// copy docs/assets to pages
 	gulp.src(path.join(settings.docs, 'assets/**/*'))
 	.pipe(gulp.dest(path.join(settings.pages, 'assets')));
+
+	// copy bootstrap-plus.css to pages
+	//gulp.src(path.join(settings.dist, 'bootstrap-plus.css'))
+	//.pipe(gulp.dest(path.join(settings.pages, 'assets')));
 }
 
 function getFolders(dir) {
