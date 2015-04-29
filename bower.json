@@ -1,11 +1,15 @@
 {
   "name": "angular-bootstrap-plus",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "http://jrief.github.io/angular-bootstrap-plus/",
   "authors": [
     "Jacob Rief <jacob.rief@gmail.com>"
   ],
   "description": "Additional directives for Angular with Bootstrap",
+  "main": [
+    "./dist/bootstrap-plus.js",
+    "./dist/bootstrap-plus.css"
+  ],
   "keywords": [
     "AngularJS",
     "directives",
