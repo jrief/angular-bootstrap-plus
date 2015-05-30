@@ -133,6 +133,16 @@ Therefore I decided to write my own version of it.
 		<li>To pre-select an <code>&lt;bsp-option&gt;</code> element, add the attribute <code>selected</code> to its HTML tag.</li>
 		<li>For a selected <code>&lt;bsp-option&gt;</code>, the value of attribute <code>value</code> is set to the scope's model (here <code>browser</code>).
 	</ol>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select ng-model="browser" required&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-option value="opera"&gt;&lt;img src="opera.png"&gt;Opera&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-option value="ie" selected&gt;&lt;img src="internet_explorer.png"&gt;Internet Explorer&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-option value="firefox"&gt;&lt;img src="firefox-icon.png"&gt;Firefox&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-option value="safari"&gt;&lt;img src="safari_browser.png"&gt;Safari&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-option value="chrome"&gt;&lt;img src="chrome.png"&gt;Chrome&lt;/bsp-option&gt;<br/>
+&lt;/bsp-select&gt;
+	</code>
 </div>
 <hr/>
 
@@ -153,6 +163,11 @@ Therefore I decided to write my own version of it.
 		<li>By adding the attribute <code>filter="Filter ..."</code> to the <code>&lt;bsp-select&gt;</code> element, a user can search for options containing that string.
 		This is useful for long lists of options.</li>
 	</ol>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select ng-model="browser"  empty-label="Select me" filter="Filter ..."&gt;<br/>
+&nbsp;&nbsp;...<br/>
+	</code>
 </div>
 <hr/>
 
@@ -172,6 +187,14 @@ Therefore I decided to write my own version of it.
 	<li>Submitting <code>&lt;bsp-select&gt;</code> via a <code>&lt;form&gt;</code> element, requires to add the attribute <code>name</code>, otherwise the browser does not know how to encode the POST data.</li>
 	<li>Try to submit the form and check the <em>x-www-form-urlencoded</em> data received by another server. The received POST data is shown in a new window.</li>
 </ol>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;form name="my_form" action="..." method="post"&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-select empty-label="Select Browser" name="select_browser"&gt;<br/>
+&nbsp;&nbsp;...<br/>
+&nbsp;&nbsp;&lt;/bsp-select&gt;<br/>
+&lt;/form&gt;
+	</code>
 <hr/>
 
 <div ng-controller="DummySelectDemoCtrl">
@@ -194,6 +217,11 @@ Therefore I decided to write my own version of it.
 		<li>In the select button, labels of selected options are separated using a comma: <code>, </code>. This can be overriden by using the attribute <code>separator</code>.
 		Special charaters inside the separator attribute, such as spaces, must be URI encoded. In doubt, use the Javascript function <code>encodeURI()</code>. 
 	</ol>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20"&gt;<br/>
+&nbsp;&nbsp;...<br/>
+	</code>
 </div>
 <hr/>
 
@@ -223,6 +251,25 @@ Therefore I decided to write my own version of it.
 		<li>By adding the attribute <code>selectable</code> to an <code>&lt;bsp-optgroup&gt;</code> element, a user can turn on and off all options of that group, by clicking on the groups title.</li>
 		<li>Adding the attribute <code>single</code> to an <code>&lt;bsp-optgroup&gt;</code> element, allows to select only <em>one</em> option of that group.</li>
 	</ol>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20" filter="Filter ..."&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-optgroup&gt;All Web Browsers<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-optgroup selectable&gt;Modern Web Browsers<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-option value="opera"&gt;&lt;acronym&gt;&lt;img src="opera.png"&gt;&lt;abbr&gt;Op&lt;/abbr&gt;&lt;/acronym&gt;Opera&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-option value="ie"&gt;&lt;acronym&gt;&lt;img src="internet_explorer.png"&gt;&lt;abbr&gt;IE&lt;/abbr&gt;&lt;/acronym&gt;Internet Explorer&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-option value="firefox"&gt;&lt;acronym&gt;&lt;img src="firefox-icon.png"&gt;&lt;abbr&gt;FF&lt;/abbr&gt;&lt;/acronym&gt;Firefox&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-option value="safari" selected&gt;&lt;acronym&gt;&lt;img src="safari_browser.png"&gt;&lt;abbr&gt;Sa&lt;/abbr&gt;&lt;/acronym&gt;Safari&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-option value="chrome" selected&gt;&lt;acronym&gt;&lt;img src="chrome.png"&gt;&lt;abbr&gt;Ch&lt;/abbr&gt;&lt;/acronym&gt;Chrome&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/bsp-optgroup&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-optgroup single&gt;Classic Web Browsers<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-option value="netscape"&gt;&lt;acronym&gt;&lt;img src="netscape_icon.jpg"&gt;&lt;abbr&gt;NS&lt;/abbr&gt;&lt;/acronym&gt;Netscape Navigator&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-option value="mosaic"&gt;&lt;acronym&gt;&lt;img src="th-winspin.gif"&gt;&lt;abbr&gt;M&lt;/abbr&gt;&lt;/acronym&gt;Mosaic Browser&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;bsp-option value="amaya"&gt;&lt;acronym&gt;&lt;img src="Amaya_logo_65x50.png/48px-Amaya_logo_65x50.png"&gt;&lt;abbr&gt;Ay&lt;/abbr&gt;&lt;/acronym&gt;Amaya&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/bsp-optgroup&gt;<br/>
+&nbsp;&nbsp;&lt;/bsp-optgroup&gt;<br/>
+&lt;/bsp-select&gt;
+	</code>
 </div>
 <hr/>
 
@@ -237,6 +284,11 @@ Therefore I decided to write my own version of it.
 		<bsp-option value="safari"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png">Safari</bsp-option>
 		<bsp-option value="chrome"><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png">Chrome</bsp-option>
 	</bsp-select>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select ng-model="browser" empty-label="Select me" required ng-change="browserChanged()"&gt;<br/>
+&nbsp;&nbsp;...
+	</code>
 </div>
 <hr/>
 <div ng-controller="ActivateSelectDemoCtrl">
