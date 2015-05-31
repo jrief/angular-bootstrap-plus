@@ -17,6 +17,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-sanitize.min.js"></script>
 	<!-- script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.js"></script-->
 	<script src="assets/plunker.js"></script>
+	<!--  jQuery is required for generating html docs -->
 	<!-- script src="assets/smoothscroll-angular-custom.js"></script-->
 
 	<script src="select/select.js"></script>
@@ -344,7 +345,7 @@ Therefore I decided to write my own version of it.
 		<li>Add any extra HTML elements to the list of options. Here a <code>&lt;hr&gt;</code> element separates Webkit based browsers from the rest of the world.</li>
 	</ol>
 	<h4>HTML Code:</h4>
-	<code>
+	<code class="language-html" data-lang="html">
 &lt;bsp-select ng-model="browser" empty-label="Select me" required&gt;<br/>
 &nbsp;&nbsp;&lt;bsp-option value="opera"&gt;&lt;img src="opera.png"&gt;Opera&lt;/bsp-option&gt;<br/>
 &nbsp;&nbsp;&lt;bsp-option value="ie" disabled&gt;&lt;img src="internet_explorer.png"&gt;Internet Explorer&lt;/bsp-option&gt;<br/>
