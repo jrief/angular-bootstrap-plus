@@ -294,12 +294,12 @@ Therefore I decided to write my own version of it.
 <div ng-controller="ActivateSelectDemoCtrl">
 	<p>Changing the model value in the parent controller, changes the state of the select box.<br/>
 	Click onto one of the list items below.</p>
-	<ul>
-		<li ng-click="setBrowser('opera')">Set Opera</li>
-		<li ng-click="setBrowser('ie')">Set Internet Explorer</li>
-		<li ng-click="setBrowser('firefox')">Set Firefox</li>
-		<li ng-click="setBrowser('safari')">Set Safari</li>
-		<li ng-click="setBrowser('chrome')">Set Chrome</li>
+	<ul class="list-unstyled">
+		<li class="btn btn-primary btn-sm" ng-click="setBrowser('opera')">Set Opera</li>
+		<li class="btn btn-primary btn-sm" ng-click="setBrowser('ie')">Set Internet Explorer</li>
+		<li class="btn btn-primary btn-sm" ng-click="setBrowser('firefox')">Set Firefox</li>
+		<li class="btn btn-primary btn-sm" ng-click="setBrowser('safari')">Set Safari</li>
+		<li class="btn btn-primary btn-sm" ng-click="setBrowser('chrome')">Set Chrome</li>
 	</ul>
 	<bsp-select ng-model="browser" empty-label="Select me" required>
 		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
@@ -313,12 +313,12 @@ Therefore I decided to write my own version of it.
 <div ng-controller="MultipleSelectDemoCtrl">
 	<p>Changing the model array in the parent's controller for a <code>&lt;bsp-select multiple&gt;</code> element, also changes the state of the select box.<br/>
 	Click onto some of the list items below.</p>
-	<ul>
-		<li ng-click="toggleBrowser('opera')">Toggle Opera</li>
-		<li ng-click="toggleBrowser('ie')">Toggle Internet Explorer</li>
-		<li ng-click="toggleBrowser('firefox')">Toggle Firefox</li>
-		<li ng-click="toggleBrowser('safari')">Toggle Safari</li>
-		<li ng-click="toggleBrowser('chrome')">Toggle Chrome</li>
+	<ul class="list-unstyled">
+		<li class="btn btn-primary btn-sm" ng-click="toggleBrowser('opera')">Toggle Opera</li>
+		<li class="btn btn-primary btn-sm" ng-click="toggleBrowser('ie')">Toggle Internet Explorer</li>
+		<li class="btn btn-primary btn-sm" ng-click="toggleBrowser('firefox')">Toggle Firefox</li>
+		<li class="btn btn-primary btn-sm" ng-click="toggleBrowser('safari')">Toggle Safari</li>
+		<li class="btn btn-primary btn-sm" ng-click="toggleBrowser('chrome')">Toggle Chrome</li>
 	</ul>
 	<bsp-select ng-model="browsers" multiple empty-label="Select me">
 		<bsp-option value="opera"><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png">Opera</bsp-option>
@@ -343,11 +343,23 @@ Therefore I decided to write my own version of it.
 		<li>To disable an <code>&lt;bsp-option&gt;</code> element, add the attribute <code>disabled</code> to its HTML tag.</li>
 		<li>Add any extra HTML elements to the list of options. Here a <code>&lt;hr&gt;</code> element separates Webkit based browsers from the rest of the world.</li>
 	</ol>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select ng-model="browser" empty-label="Select me" required&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-option value="opera"&gt;&lt;img src="opera.png"&gt;Opera&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;&lt;bsp-option value="ie" disabled&gt;&lt;img src="internet_explorer.png"&gt;Internet Explorer&lt;/bsp-option&gt;<br/>
+&nbsp;&nbsp;...
+	</code>
 </div>
 <hr>
 <div>
 	<p>Of course, also the whole <code>&lt;bsp-select&gt;</code> element can be disabled by adding the attribute <code>disabled</code>.</p>
 	<bsp-select ng-model="browser" empty-label="Select me" disabled></bsp-select>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select ng-model="browser" empty-label="Select me" disabled&gt;<br/>
+&nbsp;&nbsp;...
+	</code>
 </div>
 				</section>
 				
