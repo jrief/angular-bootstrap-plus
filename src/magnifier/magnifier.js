@@ -18,30 +18,42 @@ angular.module('bs-plus.magnifier', [])
 			var magnify;
 			console.log(attrs['style']);
 			scope.cssClass = attrs['class'];
-			element.css({position: 'relative'});
+			element.css({
+				position: 'relative',
+				'max-width': '100%',
+				height: 'auto',
+				display: 'inline-block'
+			}).removeClass(scope.cssClass);
 			canvasElem.css({
 				opacity: 0,
-				//overflow: 'hidden',
-				width: '100%',
-				height: '100%'
-				//transition: 'none'
-			});
-			plateElem.css({
 				position: 'absolute',
 				top: 0, right: 0, bottom: 0, left: 0,
-				'background-repeat': 'no-repeat'
+				overflow: 'hidden',
+				//width: '100%',
+				//height: '100%'
+				//transition: 'none'
 			});
-			element.on('mouseenter', function() {
+			canvasElem.on('mouseenter', function() {
 				console.log(element);
 				canvasElem.css('opacity', 1);
 				plateElem.css('background-image', 'url("' + scope.imageSrc + '")');
+/*
+				plateElem.css({
+					width: imageElem[0].naturalWidth,
+					height: imageElem[0].naturalHeight
+				});
+*/
+				plateElem.css({
+					width: '100%',
+					height: '100%',
+					display: 'inline-block'
+				});
 				magnify = {
 					byX: (imageElem[0].naturalWidth - imageElem[0].clientWidth) / imageElem[0].clientWidth,
 					byY: (imageElem[0].naturalHeight - imageElem[0].clientHeight) / imageElem[0].clientHeight
 				};
 			});
-			canvasElem.on('mousemove', function(evt) {
-				//return;
+			plateElem.on('mousemove', function(evt) {
 				//console.log('mousemove: ' + evt.offsetX + ', ' + evt.offsetY);
 				//var posX = imageRect.left - evt.pageX; // / imageElem[0].clientWidth;
 				//var posY = imageRect.top - evt.pageY; //imageElem[0].naturalHeight / imageElem[0].clientHeight;
@@ -50,7 +62,8 @@ angular.module('bs-plus.magnifier', [])
 				console.log('mousemove: ' + posX + ', ' + posY);
 				plateElem.css('background-position', posX + 'px ' + posY + 'px');
 				//canvasElem.css('background-position', posX + 'px ' + posY + 'px');
-				//plateElem.css({top: posY + 'px ', left: posX + 'px'});
+				//canvasElem.css({'top': posY + 'px ', 'left': posX + 'px'});
+				//plateElem.css({'margin-top': posY + 'px ', 'margin-left': posX + 'px'});
 			}).on('mouseout', function () {
 				console.log('mouseout');
 				canvasElem.css('opacity', 0);
