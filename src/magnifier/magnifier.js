@@ -25,7 +25,8 @@ angular.module('bs-plus.magnifier', [])
 				opacity: 0,
 				position: 'absolute',
 				top: 0, right: 0, bottom: 0, left: 0,
-				overflow: 'hidden'
+				overflow: 'hidden',
+				cursor: 'crosshair'
 			});
 			plateElem.css({
 				width: '100%',
