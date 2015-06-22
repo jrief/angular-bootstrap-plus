@@ -6,8 +6,11 @@ angular.module('bs-plus.select', ['ngSanitize'])
 		restrict: 'E',
 		transclude: true,
 		templateUrl: 'select/bsp-select.tmpl.html',
-		scope: {model: '=?ngModel', ngChange: '&'},
-		controller: function($scope) {
+		scope: {
+			model: '=?ngModel',
+			ngChange: '&'
+		},
+		controller: ['$scope', function($scope) {
 			var self = this;
 			$scope.isWorking = false;
 			$scope.showDropdown = false;
@@ -138,7 +141,7 @@ angular.module('bs-plus.select', ['ngSanitize'])
 				$scope.searchString = '';
 				$scope.filterOptions();
 			};
-		},
+		}],
 		link: function(scope, element, attrs, controller, transclude) {
 			function addFilterInputElement() {
 				// add a search field to filter options
