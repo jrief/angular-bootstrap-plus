@@ -1,0 +1,109 @@
+bsp-select {
+	position: relative;
+	white-space: nowrap;
+}
+bsp-select .button {
+	padding: 1px 8px 1px 8px;
+	font-size: 14px;
+	height: 34px;
+	border: 1px solid #c6c6c6;
+	border-radius: 4px;
+	white-space: normal;
+	background-color: #eee;
+	background-image: linear-gradient(#fff, #ddd);
+}
+bsp-select .button.disabled  {
+	color: #a0a0a0;
+}
+bsp-select .button:focus {
+	outline: none;
+}
+bsp-select span.sep {
+  display: inline-block;
+  width: 10px;
+}
+bsp-select img {
+	height: 22px;
+	width: 22px;
+	margin: 0 5px 0 0;
+}
+bsp-select .bsp-wrapper {
+	position: absolute;
+	z-index: 999;
+	left: 0;
+}
+bsp-select .filter {
+	position: relative;
+}
+bsp-select .filter input {
+	display: block;
+	width: 100%;
+	padding: 5px 10px;
+	border: 1px solid #c6c6c6;
+	border-radius: 4px;
+}
+bsp-select .filter .reset {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-weight: bold;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	line-height: 100%;
+}
+bsp-select .bsp-container {
+	background-color: #fff;
+	border: 1px solid #c6c6c6;
+	border-radius: 4px;
+	margin-top: 4px;
+}
+bsp-select .bsp-container hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+bsp-select bsp-option, bsp-select bsp-default-option {
+	position: relative;
+	display: block;
+	padding: 5px 5px 5px 30px;
+	margin: 0;
+}
+bsp-select bsp-option abbr {
+	display: none;
+}
+bsp-select .selected::before {
+	content: "\2714";
+	position: absolute;
+	top: 5px;
+	left: 10px;
+}
+bsp-option, bsp-default-option  {
+	background-color: #fff;
+	cursor: pointer;
+}
+bsp-option.disabled, bsp-option.disabled:hover  {
+	color: #a0a0a0;
+	cursor: default;
+	background-color: #fff;
+}
+bsp-option:hover, bsp-default-option:hover  {
+	background-color: whitesmoke;
+}
+bsp-optgroup {
+	display: block;
+	padding: 2px 2px 0;
+	background-color: whitesmoke;
+	border-top: 1px solid #cccccc;
+}
+bsp-optgroup:first-child {
+	border-top: none;
+}
+bsp-optgroup > h3, bsp-optgroup > h4, bsp-optgroup > h5, bsp-optgroup > h6 {
+	padding-left: 10px;
+}
+bsp-optgroup:hover {
+	background-color: whitesmoke;
+}
+bsp-optgroup.selectable {
+	cursor: pointer;
+}
