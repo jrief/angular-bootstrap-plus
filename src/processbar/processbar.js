@@ -10,17 +10,18 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 		require: 'bspProcessBar',
 		controller: function($scope) {
 			var self = this;
+
 			$scope.selectStep = function($id) {
 				console.log($id);
-				if ($scope.bspProcessSteps[$id].enabled) {
+				if ($scope.findProcessStep($id).enabled) {
 					$scope.activeStep = $id;
 					self.hideStepElements();
 				}
 			};
 
 			$scope.stepButtonClass = function($id) {
-				var classes = [];
-				if ($scope.bspProcessSteps[$id].enabled && $scope.bspProcessSteps[$id].validated) {
+				var classes = [], step = $scope.findProcessStep($id);
+				if (step.enabled && step.validated) {
 					classes.push('btn-primary');
 				} else {
 					classes.push('btn-default');
@@ -32,23 +33,34 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 			};
 
 			$scope.stepButtonDisabled = function($id) {
-				return ($scope.activeStep != $id && !$scope.bspProcessSteps[$id].enabled);
+				return ($scope.activeStep != $id && !$scope.findProcessStep($id).enabled);
+			};
+
+			$scope.findProcessStep = function($id) {
+				var k;
+				for (k = 0; k < $scope.bspProcessSteps.length; k++) {
+					if ($scope.bspProcessSteps[k].$id == $id)
+						return $scope.bspProcessSteps[k];
+				}
+				throw new Error("Process step with $id=" + $id + " does not exist");
 			};
 
 			this.hideStepElements = function() {
-				angular.forEach($scope.bspProcessSteps, function(step, $id) {
-					if ($id == $scope.activeStep) { // intentionally ==
+				var k, step;
+				for (k = 0; k < $scope.bspProcessSteps.length; k++) {
+					step = $scope.bspProcessSteps[k];
+					if (step.$id == $scope.activeStep) { // intentionally ==
 						step.element.removeClass('ng-hide');
 					} else {
 						step.element.addClass('ng-hide');
 					}
-				});
+				}
 			};
 
 			this.enableStepElements = function() {
 				var k, enabled = true, step;
-				for (k = 0; k < $scope.bspStepOrder.length; k++) {
-					step = $scope.bspProcessSteps[$scope.bspStepOrder[k]];
+				for (k = 0; k < $scope.bspProcessSteps.length; k++) {
+					step = $scope.bspProcessSteps[k];
 					step.enabled = enabled;
 					enabled = enabled && step.validated;
 				}
@@ -57,9 +69,8 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 		link: {
 			pre: function(scope, element, attrs) {
 				console.log(scope);
-				// a list of booleans keeping the validation state of each child form of this element
-				scope.bspProcessSteps = {};
-				scope.bspStepOrder = [];
+				// keep the validation state of each child form of this element
+				scope.bspProcessSteps = [];
 			},
 			post: function(scope, element, attrs, controller) {
 				var k, step;
@@ -67,9 +78,9 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 				$compile($templateCache.get('bsp/process-bar.html'))(scope, function(clonedElement, scope) {
 					element.prepend(clonedElement);
 				});
-				scope.activeStep = scope.bspStepOrder[0];
-				for (k = 0; k < scope.bspStepOrder.length; k++) {
-					step = scope.bspProcessSteps[scope.bspStepOrder[k]];
+				scope.activeStep = scope.bspProcessSteps[0].$id;
+				for (k = 0; k < scope.bspProcessSteps.length; k++) {
+					step = scope.bspProcessSteps[k];
 					if (step.validated) {
 						scope.activeStep = step.$id;
 					}
@@ -89,6 +100,8 @@ module.directive('bspProcessStep', ['$q', function($q) {
 		scope: true,
 		controller: function($scope) {
 			// check each child form's validation and reduce it to one single state
+			var self = this;
+
 			this.reduceValidation = function(formId, formIsValid) {
 				console.log('reduceValidation: ' + formId + ' = ' + formIsValid);
 				$scope.bspValidatedForms[formId] = formIsValid;
@@ -97,31 +110,37 @@ module.directive('bspProcessStep', ['$q', function($q) {
 					$scope.stepIsValid = $scope.stepIsValid && validatedForm;
 				});
 				console.log($scope.bspValidatedForms);  console.log('stepIsValid = ' + $scope.stepIsValid);
-				$scope.$parent.bspProcessSteps[$scope.$id].validated = $scope.stepIsValid;
+				$scope.$parent.findProcessStep($scope.$id).validated = $scope.stepIsValid;
 				console.log($scope.$parent.bspProcessSteps);
+				console.log(self);
 			};
 		},
 		link: {
-			pre: function(scope, element, attrs) {
+			pre: function(scope, element, attrs, controllers) {
 				// to start with, add any value to the validation list
-				scope.$parent.bspProcessSteps[scope.$id] = {
+				scope.$parent.bspProcessSteps.push({
+					$id: scope.$id,
 					validated: false,
 					title: attrs.title,
 					element: element,
 					enabled: false
-				};
-				scope.$parent.bspStepOrder.push(scope.$id);
+				});
 				// a map of booleans keeping the validation state for each of the child forms
 				scope.bspValidatedForms = {};
+				controllers[1].parent = controllers[0];
 			},
 			post: function(scope, element, attrs, controllers) {
 				console.log(scope);
 				scope.nextStep = function(promise) {
-					var k = scope.$parent.bspStepOrder.indexOf(scope.$parent.activeStep);
+					var k;
+					for (k = 0; k < scope.bspProcessSteps.length; k++) {
+						if (scope.bspProcessSteps[k].$id == scope.$parent.activeStep)
+							break;
+					}
 					$q.when(promise).then(function(result) {
 						console.log(result);
-						if (k < scope.$parent.bspStepOrder.length - 1) {
-							scope.$parent.activeStep = scope.$parent.bspStepOrder[k + 1];
+						if (k < scope.$parent.bspProcessSteps.length - 1) {
+							scope.$parent.activeStep = scope.$parent.bspProcessSteps[k + 1].$id;
 							controllers[0].enableStepElements();
 							controllers[0].hideStepElements();
 						}
