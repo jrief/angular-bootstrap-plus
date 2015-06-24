@@ -25,19 +25,19 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 				} else {
 					classes.push('btn-default');
 				}
-				if ($scope.activeStep === $id) {
+				if ($scope.activeStep == $id) { // intentionally ==
 					classes.push('active');
 				}
 				return classes;
 			};
 
 			$scope.stepButtonDisabled = function($id) {
-				return ($scope.activeStep !== $id && !$scope.bspProcessSteps[$id].enabled);
+				return ($scope.activeStep != $id && !$scope.bspProcessSteps[$id].enabled);
 			};
 
 			this.hideStepElements = function() {
 				angular.forEach($scope.bspProcessSteps, function(step, $id) {
-					if ($id === $scope.activeStep) {
+					if ($id == $scope.activeStep) { // intentionally ==
 						step.element.removeClass('ng-hide');
 					} else {
 						step.element.addClass('ng-hide');
