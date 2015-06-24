@@ -13,14 +13,14 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 
 			$scope.selectStep = function($id) {
 				console.log($id);
-				if ($scope.findProcessStep($id).enabled) {
+				if (self.findProcessStep($id).enabled) {
 					$scope.activeStep = $id;
 					self.hideStepElements();
 				}
 			};
 
 			$scope.stepButtonClass = function($id) {
-				var classes = [], step = $scope.findProcessStep($id);
+				var classes = [], step = self.findProcessStep($id);
 				if (step.enabled && step.validated) {
 					classes.push('btn-primary');
 				} else {
@@ -33,10 +33,10 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 			};
 
 			$scope.stepButtonDisabled = function($id) {
-				return ($scope.activeStep != $id && !$scope.findProcessStep($id).enabled);
+				return ($scope.activeStep != $id && !self.findProcessStep($id).enabled);
 			};
 
-			$scope.findProcessStep = function($id) {
+			this.findProcessStep = function($id) {
 				var k;
 				for (k = 0; k < $scope.bspProcessSteps.length; k++) {
 					if ($scope.bspProcessSteps[k].$id == $id)
@@ -110,7 +110,7 @@ module.directive('bspProcessStep', ['$q', function($q) {
 					$scope.stepIsValid = $scope.stepIsValid && validatedForm;
 				});
 				console.log($scope.bspValidatedForms);  console.log('stepIsValid = ' + $scope.stepIsValid);
-				$scope.$parent.findProcessStep($scope.$id).validated = $scope.stepIsValid;
+				self.parent.findProcessStep($scope.$id).validated = $scope.stepIsValid;
 				console.log($scope.$parent.bspProcessSteps);
 				console.log(self);
 			};
