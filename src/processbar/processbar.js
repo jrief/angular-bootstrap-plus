@@ -174,19 +174,17 @@ module.directive('form', ['$timeout', function($timeout) {
 			if (!controllers[0])
 				return;  // not for forms outside a <bsp-process-step></bsp-process-step>
 
-			element.on('change', function() {
-				console.log('changed');
-				scope.$apply(function() {
-					controllers[0].reduceValidation(scope.$id, controllers[1].$valid);
-				});
-				//scope.$parent.$apply();
+			element.on('keyup mouseup', function() {
+				// delay until validation is ready
+				$timeout(reduceValidation);
 			});
 
 			// delay first evaluation until form is fully validated
-			$timeout(function() {
-				console.log(controllers[1].$valid); 
+			$timeout(reduceValidation);
+
+			function reduceValidation() {
 				controllers[0].reduceValidation(scope.$id, controllers[1].$valid);
-			});
+			}
 		}
 	};
 }]);
