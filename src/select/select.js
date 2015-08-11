@@ -126,9 +126,8 @@ angular.module('bs-plus.select', ['ngSanitize'])
 
 			self.toggleDropdown = function($event) {
 				var value, index;
-				if ($event.target.tagName === "SUP") {
+				if ($event.target.tagName === 'SUP') {
 					value = angular.element($event.target).attr('value');
-					console.log(value);
 					angular.forEach($scope.optionElements, function(elem) {
 						if (elem.attr('value') === value) {
 							elem.removeClass('active');
