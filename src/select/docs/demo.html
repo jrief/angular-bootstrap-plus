@@ -117,6 +117,28 @@ Therefore I decided to write my own version of it.
 <hr/>
 
 <div ng-controller="DummySelectDemoCtrl">
+	<h3>Multiple deselectable options</h3>
+	<bsp-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20" deselectable>
+		<bsp-option value="opera"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png"></acronym>Opera</bsp-option>
+		<bsp-option value="ie"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png"></acronym>Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><acronym><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png"></acronym>Firefox</bsp-option>
+		<bsp-option value="safari" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png"></acronym>Safari</bsp-option>
+		<bsp-option value="chrome" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png"></acronym>Chrome</bsp-option>
+	</bsp-select>
+	<h5>Controller's scope:</h5>
+	<pre>{{ browser }}</pre>
+	<ol>
+		<li>By adding the attribute <code>deselectable</code> to an <code>&lt;bsp-select&gt;</code> element, selected options can be deselected right out of the drop-down button.</li>
+	</ol>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20" deselectable&gt;<br/>
+&nbsp;&nbsp;...<br/>
+	</code>
+</div>
+<hr/>
+
+<div ng-controller="DummySelectDemoCtrl">
 	<h3>Multiple options <small>using option groups</small></h3>
 	<bsp-select multiple ng-model="browser" empty-label="Select me" separator="%20%20%20" filter="Filter ...">
 		<bsp-optgroup>All Web Browsers

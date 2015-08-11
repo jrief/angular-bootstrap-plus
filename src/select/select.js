@@ -17,10 +17,27 @@ angular.module('bs-plus.select', ['ngSanitize'])
 			$scope.optionElements = [];
 
 			$scope.renderButtonLabels = function() {
-				if ($scope.$parent.hasOwnProperty('renderButtonLabels'))  // TODO: delegated $scope methods must be set explicitly not implicitly
-					return $scope.$parent.renderButtonLabels($scope.buttonLabels, $scope.emptyLabel);
-				if ($scope.buttonLabels.length > 0)
-					return $scope.buttonLabels.join('<span class=sep></span>');
+				return self.renderButtonLabels($scope.buttonLabels);
+			};
+
+			self.addCloseIcons = function(buttonLabels) {
+				var k;
+				for (k = 0; k < buttonLabels.length; k++) {
+					if (angular.isDefined($scope.model[k])) {
+						buttonLabels[k] += '<sup class="deselect btn btn-default" value="' + $scope.model[k] + '">&times;</sup>';
+					}
+				}
+			};
+
+			self.renderButtonLabels = function(buttonLabels) {
+				var k;
+				if (buttonLabels.length > 0) {
+					buttonLabels = angular.copy(buttonLabels);
+					if (self.deselectable) {
+						self.addCloseIcons(buttonLabels);
+					}
+					return buttonLabels.join('<span class=sep></span>');
+				}
 				return $scope.emptyLabel;
 			};
 
@@ -107,9 +124,29 @@ angular.module('bs-plus.select', ['ngSanitize'])
 				$scope.showDropdown = false;
 			};
 
+			self.toggleDropdown = function($event) {
+				var value, index;
+				if ($event.target.tagName === "SUP") {
+					value = angular.element($event.target).attr('value');
+					console.log(value);
+					angular.forEach($scope.optionElements, function(elem) {
+						if (elem.attr('value') === value) {
+							elem.removeClass('active');
+							index = $scope.model.indexOf(value);
+							if (index >= 0) {
+								$scope.model.splice(index, 1);
+							}
+						}
+					});
+					self.syncButton(true);
+				} else {
+					$scope.showDropdown = !$scope.isDisabled && !$scope.showDropdown;
+				}
+			};
+
 			$scope.toggleDropdown = function($event) {
 				$event.stopPropagation();
-				$scope.showDropdown = !$scope.isDisabled && !$scope.showDropdown;
+				self.toggleDropdown($event);
 			};
 
 			$scope.deselectAll = function() {
@@ -142,6 +179,7 @@ angular.module('bs-plus.select', ['ngSanitize'])
 				$scope.filterOptions();
 			};
 		}],
+		controllerAs: 'self',
 		link: function(scope, element, attrs, controller, transclude) {
 			function addFilterInputElement() {
 				// add a search field to filter options
@@ -162,6 +200,7 @@ angular.module('bs-plus.select', ['ngSanitize'])
 			// need some help on transclude. Otherwise the filterElem has to be added to the DOM manually, see above.
 			controller.isMultiple = attrs.hasOwnProperty('multiple');
 			controller.isRequired = attrs.hasOwnProperty('required');
+			controller.deselectable = controller.isMultiple && attrs.hasOwnProperty('deselectable');
 			scope.name = attrs.hasOwnProperty('name') ? attrs.name : null;
 			scope.emptyLabel = attrs.hasOwnProperty('emptyLabel') ? attrs.emptyLabel : '---';
 			scope.model = controller.isMultiple ? [] : '';
