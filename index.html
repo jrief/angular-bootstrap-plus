@@ -9,6 +9,8 @@
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="assets/demo.css" rel="stylesheet" />
 
+	<link href="processbar/processbar.css" rel="stylesheet" />
+
 	<link href="select/select.css" rel="stylesheet" />
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.7/fastclick.min.js"></script>
@@ -19,6 +21,12 @@
 	<script src="assets/plunker.js"></script>
 	<!--  jQuery is required for generating html docs -->
 	<!-- script src="assets/smoothscroll-angular-custom.js"></script-->
+
+	<script src="magnifier/magnifier.js"></script>
+
+	<script src="processbar/processbar.js"></script>
+
+	<script src="processbar/docs/demo.js"></script>
 
 	<script src="select/select.js"></script>
 
@@ -105,6 +113,17 @@ the internals of the drop down menu using pure HTML, this directive didn&#39;t f
 maintainers, it wasn&#39;t accepted. Apparently the UI Bootstrap team wants to follow the same path as
 the Angular Strap team. My intention however is to use as much declarative HTML instead of
 configuration objects.</p>
+				
+				<hr />
+				<section>
+					
+				</section>
+				
+				<hr />
+				<section>
+					<h2>Process Bar</h2>
+
+				</section>
 				
 				<hr />
 				<section>
@@ -221,6 +240,28 @@ Therefore I decided to write my own version of it.
 	<h4>HTML Code:</h4>
 	<code>
 &lt;bsp-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20"&gt;<br/>
+&nbsp;&nbsp;...<br/>
+	</code>
+</div>
+<hr/>
+
+<div ng-controller="DummySelectDemoCtrl">
+	<h3>Multiple deselectable options</h3>
+	<bsp-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20" deselectable>
+		<bsp-option value="opera"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/opera.png"></acronym>Opera</bsp-option>
+		<bsp-option value="ie"><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32/internet_explorer.png"></acronym>Internet Explorer</bsp-option>
+		<bsp-option value="firefox"><acronym><img src="//cdn1.iconfinder.com/data/icons/humano2/32x32/apps/firefox-icon.png"></acronym>Firefox</bsp-option>
+		<bsp-option value="safari" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/fatcow/32x32/safari_browser.png"></acronym>Safari</bsp-option>
+		<bsp-option value="chrome" selected><acronym><img src="//cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/32/chrome.png"></acronym>Chrome</bsp-option>
+	</bsp-select>
+	<h5>Controller's scope:</h5>
+	<pre>{{ browser }}</pre>
+	<ol>
+		<li>By adding the attribute <code>deselectable</code> to an <code>&lt;bsp-select&gt;</code> element, selected options can be deselected right out of the drop-down button.</li>
+	</ol>
+	<h4>HTML Code:</h4>
+	<code>
+&lt;bsp-select multiple ng-model="browser" empty-label="Select any" separator="%20%20%20" deselectable&gt;<br/>
 &nbsp;&nbsp;...<br/>
 	</code>
 </div>

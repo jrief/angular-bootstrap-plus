@@ -1,5 +1,5 @@
 <button type="button" class="button" ng-click="toggleDropdown($event)" ng-class="cssClasses">
-	<span ng-bind-html="buttonLabels.join('<span class=sep></span>') || emptyLabel"></span>
+	<span ng-bind-html="renderButtonLabels()"></span>
 	<span class="caret"></span>
 	<input ng-if="name" type="hidden" name="{{ name }}" value="{{ model }}" />
 </button>

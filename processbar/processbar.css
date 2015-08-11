@@ -1,0 +1,59 @@
+/* Put your css in here */
+
+.stepwizard-step p {
+	margin-top: 10px;
+}
+
+.stepwizard-row {
+	display: table-row;
+}
+
+.stepwizard-row:before {
+	top: 14px;
+	bottom: 0;
+	position: absolute;
+	content: " ";
+	width: 100%;
+	height: 1px;
+	background-color: #ccc;
+	z-order: 0;
+}
+
+.stepwizard {
+	display: table;
+	width: 100%;
+	position: relative;
+}
+
+.stepwizard-step {
+	display: table-cell;
+	text-align: center;
+	position: relative;
+}
+
+.stepwizard-step button[disabled] {
+	opacity: 1 !important;
+	filter: alpha(opacity=100) !important;
+	pointer-events: inherit;
+}
+
+.stepwizard-step .btn.active {
+	box-shadow: 0 0 15px 3px rgb(60, 95, 186);
+}
+
+.stepwizard-step .btn.disabled {
+	opacity: 1;
+}
+.stepwizard-step .btn:active, .stepwizard-step .btn:hover, .stepwizard-step .btn.active {
+	outline: 0;
+}
+
+.btn-circle {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	padding: 6px 0;
+	font-size: 12px;
+	line-height: 1.428571429;
+	border-radius: 50%;
+}
