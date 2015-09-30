@@ -1,10 +1,10 @@
-    <script id="bsp/process-bar.html" type="text/ng-template">
-      <div class="stepwizard">
-        <div class="stepwizard-row">
-          <div class="stepwizard-step" ng-repeat="($id, step) in bspProcessSteps">
-            <button type="button" class="btn btn-circle" ng-class="stepButtonClass($id)" ng-disabled="stepButtonDisabled($id)" ng-click="selectStep($id)"><strong ng-bind="$index+1"></strong></button>
-            <p>{{ step.title }}</p>
-          </div>
-        </div>
-      </div>
-    </script>
+<script id="bsp/process-bar.html" type="text/ng-template">
+<div class="stepwizard">
+	<div class="stepwizard-row">
+		<div class="stepwizard-step" ng-repeat="($id, step) in bspProcessSteps">
+			<button type="button" class="btn btn-circle" ng-class="stepButtonClass($id)" ng-disabled="stepButtonDisabled($id)" ng-click="selectStep($id)"><strong ng-bind="$index+1"></strong></button>
+			<p>{{ step.title }}</p>
+		</div>
+	</div>
+</div>
+</script>
