@@ -12,7 +12,6 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 			var self = this;
 
 			$scope.selectStep = function(step) {
-				console.log(step);
 				if (step.enabled) {
 					$scope.activeStep = step;
 					self.hideStepElements();
@@ -59,7 +58,6 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 		},
 		link: {
 			pre: function(scope, element, attrs) {
-				console.log(scope);
 				// keep the validation state of each child form of this element
 				scope.bspProcessSteps = [];
 			},
@@ -102,15 +100,12 @@ module.directive('bspProcessStep', ['$q', function($q) {
 			};
 
 			this.reduceValidation = function(formId, formIsValid) {
-				console.log('reduceValidation: ' + formId + ' = ' + formIsValid);
 				$scope.bspValidatedForms[formId] = formIsValid;
 				$scope.stepIsValid = true;
 				angular.forEach($scope.bspValidatedForms, function(validatedForm) {
 					$scope.stepIsValid = $scope.stepIsValid && validatedForm;
 				});
-				console.log($scope.bspValidatedForms);  console.log('stepIsValid = ' + $scope.stepIsValid);
 				self.findProcessStep($scope.$id).validated = $scope.stepIsValid;
-				console.log($scope.$parent.bspProcessSteps);
 			};
 		},
 		link: {
@@ -127,7 +122,6 @@ module.directive('bspProcessStep', ['$q', function($q) {
 				scope.bspValidatedForms = {};
 			},
 			post: function(scope, element, attrs, controllers) {
-				console.log(scope);
 				scope.nextStep = function(promise) {
 					var k;
 					for (k = 0; k < scope.bspProcessSteps.length; k++) {
@@ -135,7 +129,6 @@ module.directive('bspProcessStep', ['$q', function($q) {
 							break;
 					}
 					$q.when(promise).then(function(result) {
-						console.log(result);
 						if (k < scope.$parent.bspProcessSteps.length - 1) {
 							scope.$parent.activeStep = scope.$parent.bspProcessSteps[k + 1];
 							controllers[0].enableStepElements();
@@ -169,8 +162,6 @@ module.directive('form', ['$timeout', function($timeout) {
 		priority: 1,
 		scope: {},
 		link: function(scope, element, attrs, controllers) {
-			console.log(scope);
-			console.log(controllers);
 			if (!controllers[0])
 				return;  // not for forms outside a <bsp-process-step></bsp-process-step>
 
