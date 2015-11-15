@@ -291,9 +291,9 @@ angular.module('bs-plus.select', ['ngSanitize'])
 		restrict: 'E',
 		scope: {},
 		link: function(scope, element, attrs, controllers) {
-			var selectCtrl = controllers[0],
-				parentCtrl = angular.isDefined(controllers[1]) ? controllers[1] : controllers[0],
-				isDisabled = attrs.hasOwnProperty('disabled');
+			var selectCtrl = controllers[0], isDisabled = attrs.hasOwnProperty('disabled');
+			var	parentCtrl = (!controllers[1]) ? controllers[1] : controllers[0];
+
 			parentCtrl.addOptionElement(element);
 			if (attrs.hasOwnProperty('selected')) {
 				element.addClass('active');
