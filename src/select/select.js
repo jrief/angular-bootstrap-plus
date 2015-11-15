@@ -127,6 +127,7 @@ angular.module('bs-plus.select', ['ngSanitize'])
 			self.toggleDropdown = function($event) {
 				var value, index;
 				if ($event.target.tagName === 'SUP') {
+					self.startWorking();
 					value = angular.element($event.target).attr('value');
 					angular.forEach($scope.optionElements, function(elem) {
 						if (elem.attr('value') === value) {
@@ -138,6 +139,7 @@ angular.module('bs-plus.select', ['ngSanitize'])
 						}
 					});
 					self.syncButton(true);
+					self.stopWorking();
 				} else {
 					$scope.showDropdown = !$scope.isDisabled && !$scope.showDropdown;
 				}
