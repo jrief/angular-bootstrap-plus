@@ -166,8 +166,14 @@ module.directive('form', ['$timeout', function($timeout) {
 			if (!controllers[0])
 				return;  // not for forms outside a <bsp-process-step></bsp-process-step>
 
-			element.on('keyup mouseup', function() {
+			element.find('input').on('keyup change', function() {
 				// delay until validation is ready
+				$timeout(reduceValidation);
+			});
+			element.find('select').on('change', function() {
+				$timeout(reduceValidation);
+			});
+			element.find('textarea').on('blur', function() {
 				$timeout(reduceValidation);
 			});
 
