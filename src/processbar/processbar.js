@@ -135,6 +135,7 @@ module.directive('bspProcessStep', ['$q', function($q) {
 							controllers[0].hideStepElements();
 						}
 					}, function(error) {
+						scope.stepIsValid = false;
 						console.error(error);
 					});
 				};
