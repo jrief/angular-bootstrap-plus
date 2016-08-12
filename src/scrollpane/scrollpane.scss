@@ -1,0 +1,115 @@
+bsp-scroll-pane {
+	width: 100%;
+	overflow-x: hidden;
+	border: 1px solid green;
+	display: block;
+	position: relative;
+
+	.scroll {
+		width: 25px;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		padding: 5px;
+		cursor: pointer;
+		&:hover .button {
+			opacity: 1;
+		}
+	}
+
+	.button {
+		width: 3px;
+		height: 24px;
+		top: 50%;
+		margin-top: -12px;
+		position: absolute;
+		opacity: 0.15;
+	}
+
+	.arrow {
+		&:before {
+			content: '';
+			position: absolute;
+			height: 50%;
+			width: 100%;
+			top: 0;
+			background: white;
+			transform: skew(-15deg, 0deg);
+		}
+		&:after {
+			content: '';
+			position: absolute;
+			height: 50%;
+			width: 100%;
+			bottom: 0;
+			background: white;
+			transform: skew(15deg, 0deg);
+		}
+	}
+
+	.scroll-left {
+		@extend .scroll;
+		left: 0;
+		&:hover {
+			background: linear-gradient(to right, dimgrey, transparent);
+		}
+
+		.button-left {
+			@extend .button;
+			margin-left: 2px;
+
+			.arrow-left {
+				@extend .arrow;
+				&::before {
+					transform: skew(-15deg, 0deg);
+				}
+				&::after {
+					transform: skew(15deg, 0deg);
+				}
+			}
+		}
+	}
+
+	.scroll-right {
+		@extend .scroll;
+		right: 0;
+		&:hover {
+			background: linear-gradient(to left, dimgrey, transparent);
+		}
+
+		.button-right {
+			@extend .button;
+			margin-left: 12px;
+
+			.arrow-right {
+				@extend .arrow;
+				&:before {
+					transform: skew(15deg, 0deg);
+				}
+				&:after {
+					transform: skew(-15deg, 0deg);
+				}
+			}
+		}
+	}
+}
+
+.demo {
+  margin: 0;
+  padding: 5px;
+  display: block;
+  height: 60px;
+  overflow-x: hidden;
+  list-style-type: none;
+  white-space: nowrap;
+  margin-left: 0;
+  transition: margin-left 0.5s;
+}
+.demo li {
+  display: inline-block;
+  margin: 0 5px 0 0;
+  background-color: #bbb;
+  width: 50px;
+  height: 50px;
+  padding:5px;
+}
