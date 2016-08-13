@@ -27,24 +27,12 @@ bsp-scroll-pane {
 	}
 
 	.arrow {
-		&:before {
-			content: '';
-			position: absolute;
-			height: 50%;
-			width: 100%;
-			top: 0;
-			background: white;
-			transform: skew(-15deg, 0deg);
-		}
-		&:after {
-			content: '';
-			position: absolute;
-			height: 50%;
-			width: 100%;
-			bottom: 0;
-			background: white;
-			transform: skew(15deg, 0deg);
-		}
+		content: '';
+		position: absolute;
+		height: 50%;
+		width: 100%;
+		background-color: white;
+		box-shadow: black 1px 1px 3px;
 	}
 
 	.scroll-left {
@@ -59,11 +47,14 @@ bsp-scroll-pane {
 			margin-left: 2px;
 
 			.arrow-left {
-				@extend .arrow;
 				&::before {
+					@extend .arrow;
+					top: 0;
 					transform: skew(-15deg, 0deg);
 				}
 				&::after {
+					@extend .arrow;
+					bottom: 0;
 					transform: skew(15deg, 0deg);
 				}
 			}
@@ -79,37 +70,20 @@ bsp-scroll-pane {
 
 		.button-right {
 			@extend .button;
-			margin-left: 12px;
+			margin-left: 10px;
 
 			.arrow-right {
-				@extend .arrow;
 				&:before {
+					@extend .arrow;
+					top: 0;
 					transform: skew(15deg, 0deg);
 				}
 				&:after {
+					@extend .arrow;
+					bottom: 0;
 					transform: skew(-15deg, 0deg);
 				}
 			}
 		}
 	}
-}
-
-.demo {
-  margin: 0;
-  padding: 5px;
-  display: block;
-  height: 60px;
-  overflow-x: hidden;
-  list-style-type: none;
-  white-space: nowrap;
-  margin-left: 0;
-  transition: margin-left 0.5s;
-}
-.demo li {
-  display: inline-block;
-  margin: 0 5px 0 0;
-  background-color: #bbb;
-  width: 50px;
-  height: 50px;
-  padding:5px;
 }
