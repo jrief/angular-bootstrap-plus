@@ -1,13 +1,13 @@
 bsp-scroll-pane {
 	width: 100%;
 	overflow-x: hidden;
-	border: 1px solid green;
 	display: block;
 	position: relative;
 
 	.scroll {
 		width: 25px;
 		position: absolute;
+		display: block;
 		top: 0;
 		bottom: 0;
 		padding: 5px;
@@ -18,10 +18,10 @@ bsp-scroll-pane {
 	}
 
 	.button {
-		width: 3px;
+		width: 4px;
 		height: 24px;
 		top: 50%;
-		margin-top: -12px;
+		margin-top: -10px;
 		position: absolute;
 		opacity: 0.15;
 	}
@@ -32,7 +32,7 @@ bsp-scroll-pane {
 		height: 50%;
 		width: 100%;
 		background-color: white;
-		box-shadow: black 1px 1px 3px;
+		box-shadow: black 2px 1px 4px;
 	}
 
 	.scroll-left {
@@ -50,12 +50,12 @@ bsp-scroll-pane {
 				&::before {
 					@extend .arrow;
 					top: 0;
-					transform: skew(-15deg, 0deg);
+					transform: skew(-30deg, 0deg);
 				}
 				&::after {
 					@extend .arrow;
 					bottom: 0;
-					transform: skew(15deg, 0deg);
+					transform: skew(30deg, 0deg);
 				}
 			}
 		}
@@ -76,12 +76,12 @@ bsp-scroll-pane {
 				&:before {
 					@extend .arrow;
 					top: 0;
-					transform: skew(15deg, 0deg);
+					transform: skew(30deg, 0deg);
 				}
 				&:after {
 					@extend .arrow;
 					bottom: 0;
-					transform: skew(-15deg, 0deg);
+					transform: skew(-30deg, 0deg);
 				}
 			}
 		}
