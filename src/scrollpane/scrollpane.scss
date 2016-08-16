@@ -4,8 +4,8 @@ bsp-scroll-pane {
 	display: block;
 	position: relative;
 
-	.scroll {
-		width: 25px;
+	pane-control {
+		width: 35px;
 		position: absolute;
 		display: block;
 		top: 0;
@@ -15,74 +15,29 @@ bsp-scroll-pane {
 		&:hover .button {
 			opacity: 1;
 		}
-	}
-
-	.button {
-		width: 4px;
-		height: 24px;
-		top: 50%;
-		margin-top: -10px;
-		position: absolute;
-		opacity: 0.15;
-	}
-
-	.arrow {
-		content: '';
-		position: absolute;
-		height: 50%;
-		width: 100%;
-		background-color: white;
-		box-shadow: black 2px 1px 4px;
-	}
-
-	.scroll-left {
-		@extend .scroll;
-		left: 0;
-		&:hover {
-			background: linear-gradient(to right, dimgrey, transparent);
-		}
-
-		.button-left {
-			@extend .button;
-			margin-left: 2px;
-
-			.arrow-left {
-				&::before {
-					@extend .arrow;
-					top: 0;
-					transform: skew(-30deg, 0deg);
-				}
-				&::after {
-					@extend .arrow;
-					bottom: 0;
-					transform: skew(30deg, 0deg);
-				}
+		&.left {
+			left: 0;
+			&:hover {
+				background: linear-gradient(to right, dimgrey, transparent);
 			}
 		}
-	}
-
-	.scroll-right {
-		@extend .scroll;
-		right: 0;
-		&:hover {
-			background: linear-gradient(to left, dimgrey, transparent);
+		&.right {
+			right: 0;
+			&:hover {
+				background: linear-gradient(to left, dimgrey, transparent);
+			}
 		}
-
-		.button-right {
-			@extend .button;
-			margin-left: 10px;
-
-			.arrow-right {
-				&:before {
-					@extend .arrow;
-					top: 0;
-					transform: skew(30deg, 0deg);
-				}
-				&:after {
-					@extend .arrow;
-					bottom: 0;
-					transform: skew(-30deg, 0deg);
-				}
+		.glyphicon {
+			top: 50%;
+			margin-top: -13px;
+			position: absolute;
+			color: #eee;
+			width: 26px;
+			height: 26px;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+			font-size: 25px;
+			&.glyphicon-chevron-right {
+				margin-left: 2px;
 			}
 		}
 	}

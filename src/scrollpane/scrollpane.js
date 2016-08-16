@@ -32,16 +32,12 @@ module.directive('bspScrollPane', ['$timeout', '$window', function($timeout, $wi
 			angular.element($window).bind('resize', setDefaults);
 			setDefaults();
 
-			element.find('scroll-edge').on('click', function(event) {
-				switch (event.target.getAttribute('class')) {
-					default:
-						return;
-					case 'scroll-left': case 'button-left': case 'arrow-left':
-						offset -= delta;
-						break;
-					case 'scroll-right': case 'button-right': case 'arrow-right':
-						offset += delta;
-						break;
+			element.find('pane-control').on('click', function(event) {
+				var classes = event.target.getAttribute('class');
+				if (classes.indexOf('left') >= 0) {
+					offset -= delta;
+				} else if (classes.indexOf('right') >= 0) {
+					offset += delta;
 				}
 				offset = Math.min(Math.max(offset, -margin-25), maxOffset+25);
 				angular.element(child).css('margin-left', -offset + 'px');
