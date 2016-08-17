@@ -1,12 +1,12 @@
 (function() {
 'use strict';
 
-var module = angular.module('bs-plus.scrollpane', []);
+var module = angular.module('bs-plus.scrollpanel', []);
 
-module.directive('bspScrollPane', ['$timeout', '$window', function($timeout, $window) {
+module.directive('bspScrollpanel', ['$timeout', '$window', function($timeout, $window) {
 	return {
 		transclude: true,
-		templateUrl: 'scrollpane/bsp-scrollpane.tmpl.html',
+		templateUrl: 'scrollpanel/bsp-scrollpanel.tmpl.html',
 		link: function(scope, element, attrs) {
 			var child, delta, maxOffset, offset, initial, margin;
 
@@ -24,7 +24,7 @@ module.directive('bspScrollPane', ['$timeout', '$window', function($timeout, $wi
 
 			child = element.children('ng-transclude').children();
 			if (child.length !== 3)
-				throw new Error("A 'bsp-scroll-pane' directive may contain only one element");
+				throw new Error("A 'bsp-scrollpanel' directive may contain only one element");
 			child = child[1];
 			initial = attrs.initialPercentage / 100;
 			margin = child.offsetLeft;
