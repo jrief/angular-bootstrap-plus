@@ -32,7 +32,7 @@ module.directive('bspScrollpanel', ['$timeout', '$window', function($timeout, $w
 			angular.element($window).bind('resize', setDefaults);
 			setDefaults();
 
-			element.find('pane-control').on('click', function(event) {
+			element.find('panel-control').on('click', function(event) {
 				var classes = event.target.getAttribute('class');
 				if (classes.indexOf('left') >= 0) {
 					offset -= delta;
