@@ -23,7 +23,7 @@ angular.module('bs-plus.select', ['ngSanitize'])
 			self.addCloseIcons = function(buttonLabels) {
 				var k;
 				for (k = 0; k < buttonLabels.length; k++) {
-					if (angular.isDefined($scope.model[k])) {
+					if (angular.isArray($scope.model) && $scope.model[k]) {
 						buttonLabels[k] += '<sup class="deselect btn btn-default" value="' + $scope.model[k] + '">&times;</sup>';
 					}
 				}
@@ -104,11 +104,13 @@ angular.module('bs-plus.select', ['ngSanitize'])
 					angular.forEach($scope.optionElements, function(elem) {
 						elem.removeClass('active');
 					});
-					angular.forEach($scope.optionElements, function(elem) {
-						if ($scope.model.indexOf(elem.attr('value')) >= 0) {
-							elem.addClass('active');
-						}
-					});
+					if (angular.isArray($scope.model)) {
+						angular.forEach($scope.optionElements, function(elem) {
+							if ($scope.model.indexOf(elem.attr('value')) >= 0) {
+								elem.addClass('active');
+							}
+						});
+					}
 				} else {
 					angular.forEach($scope.optionElements, function(elem) {
 						elem.removeClass('active');
@@ -190,7 +192,7 @@ angular.module('bs-plus.select', ['ngSanitize'])
 				filterElem = $compile(
 					'<div class="filter">' +
 						'<input placeholder="{{ filterPlaceholder }}" type="text" ng-change="filterOptions()" ng-model="searchString">' +
-					'<button type="button" class="button reset" ng-click="resetFilter()">&times;</button>' + 
+					'<button type="button" class="button reset" ng-click="resetFilter()">&times;</button>' +
 					'</div>')(scope);
 				angular.forEach(element.find('div'), function(divElem) {
 					if (divElem.attributes.hasOwnProperty('ng-transclude')) {
