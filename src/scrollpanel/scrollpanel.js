@@ -29,8 +29,7 @@ module.directive('bspScrollpanel', ['$timeout', '$window', function($timeout, $w
 			initial = attrs.initialPercentage / 100;
 			margin = child.offsetLeft;
 
-			angular.element($window).bind('resize', setDefaults);
-			setDefaults();
+			angular.element($window).on('resize load', setDefaults);
 
 			element.find('panel-control').on('click', function(event) {
 				var classes = event.target.getAttribute('class');
