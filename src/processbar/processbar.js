@@ -145,17 +145,6 @@ module.directive('bspProcessStep', ['$q', function($q) {
 
 
 module.directive('form', ['$timeout', function($timeout) {
-	function toBoolean(value) {
-		var v;
-		if (value && value.length !== 0) {
-			v = angular.lowercase("" + value);
-			value = !(v == 'f' || v == '0' || v == 'false' || v == 'no' || v == 'n' || v == '[]');
-		} else {
-			value = false;
-		}
-		return value;
-	}
-
 	return {
 		restrict: 'E',
 		require: ['^?bspProcessStep', 'form'],
