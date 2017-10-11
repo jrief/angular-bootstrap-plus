@@ -17,13 +17,12 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 
 			$scope.stepButtonClass = function(step) {
 				var classes = [];
-				if (step.validated) {
-					classes.push('btn-primary');
+				if ($scope.activeStep === step) {
+					classes.push('btn-primary active');
+				} else if (step.validated || step.enabled) {
+					classes.push('btn-success');
 				} else {
 					classes.push('btn-default');
-				}
-				if ($scope.activeStep === step) {
-					classes.push('active');
 				}
 				return classes;
 			};
@@ -36,6 +35,7 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 			pre: function(scope, element, attrs) {
 				// keep the validation state of each child form of this element
 				scope.bspProcessSteps = [];
+				scope.activeStep = {'$id': null};
 			},
 			post: function(scope, element, attrs, controller) {
 				var k, step;
