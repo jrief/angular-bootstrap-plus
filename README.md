@@ -22,15 +22,20 @@ This is a collection of Angular directives for Bootstrap, which neither made it 
 [Angular Strap](http://mgcrea.github.io/angular-strap/), nor into 
 [UI Bootstrap](http://angular-ui.github.io/bootstrap/).
 
-Currently there is only one directive <code>&lt;bsp-select&gt;...&lt;/bsp-select&gt;</code>, but a
-compatible slider plugin has already been prepared.
 
-The alert reader might note, that a similar directive exists in <strong>Angular Strap</strong>, but
-here one must pass a list of configuration options to this directive. Since I had the need to style
-the internals of the drop down menu using pure HTML, this directive didn't fit.
+### Currently there are four directives
 
-In <strong>UI Bootstrap</strong> no such directive exists and after
-<a href="https://github.com/angular-ui/bootstrap/issues/2607">proposing this module</a> to the
-maintainers, it wasn't accepted. Apparently the UI Bootstrap team wants to follow the same path as
-the Angular Strap team. My intention however is to use as much declarative HTML instead of
-configuration objects.
+These directives do not depend on each other and can be used independently
+from each other.
+
+* <code>&lt;bsp-select&gt;...&lt;/bsp-select&gt;</code>: Use it to build select elements 
+  with active icons.
+* <code>&lt;bsp-scrollpanel&gt;...&lt;/bsp-scrollpanel&gt;</code>: Use it to create panes
+  which can be scrolled horizontally using large left- and right icons.
+* <code>&lt;bsp-processbar&gt;...&lt;/bsp-processbar&gt;</code>: Use it to create a canvas
+  with process steps which have to be accessed in consecutive order. Useful to create a
+  set of forms, which interdepend on each other and thus have to be filled out one by one.
+* <code>&lt;bsp-magnify&gt;...&lt;/bsp-magnify&gt;</code>: Use it to display details of an
+  image, if the users moves the mouse over it.
+
+Please check the README file in each of the directive folders.
