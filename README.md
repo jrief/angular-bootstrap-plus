@@ -5,7 +5,7 @@
 
 Download [Angular-Bootstrap-Plus][bsplus].
 
-[bsplus]: http://jrief.github.io/angular-bootstrap-plus/angular-bootstrap-plus-0.0.1.zip
+[bsplus]: https://www.npmjs.com/package/angular-bootstrap-plus
 
 In your web page:
 
