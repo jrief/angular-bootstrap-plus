@@ -17,6 +17,13 @@ In your web page:
 <script src="angular-bootstrap-plus/dist/bootstrap-plus.min.js" type="text/javascript"></script>
 ```
 
+Then add one or more modules to your AngularJS project:
+
+```javascript
+angular.module('myAwesomeProject', ['ngSanitize', 'bs-plus.select', ...]);
+```
+
+
 ## What is Angular Bootstrap Plus?
 This is a collection of Angular directives for Bootstrap, which neither made it into
 [Angular Strap](http://mgcrea.github.io/angular-strap/), nor into 
