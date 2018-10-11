@@ -3,7 +3,25 @@
 
 var module = angular.module('bs-plus.processbar', []);
 
-module.directive('bspProcessBar', ['$compile', '$templateCache', function($compile, $templateCache) {
+module.provider('processBar', function() {
+	var self = this;
+	this.activeStep = 'btn-primary active';
+	this.validatedStep = 'btn-success';
+	this.untouchedStep = 'btn-default';
+
+	this.$get = function() {
+		return self;
+	};
+
+	this.setButtonClasses = function(activeStep, validatedStep, untouchedStep) {
+		this.activeStep = activeStep;
+		this.validatedStep = validatedStep;
+		this.untouchedStep = untouchedStep;
+	};
+});
+
+	
+module.directive('bspProcessBar', ['$compile', '$templateCache', 'processBar', function($compile, $templateCache, processBar) {
 	return {
 		restrict: 'E',
 		scope: true,
@@ -16,15 +34,13 @@ module.directive('bspProcessBar', ['$compile', '$templateCache', function($compi
 			};
 
 			$scope.stepButtonClass = function(step) {
-				var classes = [];
 				if ($scope.activeStep === step) {
-					classes.push('btn-primary active');
+					return processBar.activeStep;
 				} else if (step.validated || step.enabled) {
-					classes.push('btn-success');
+					return processBar.validatedStep;
 				} else {
-					classes.push('btn-default');
+					return processBar.untouchedStep;
 				}
-				return classes;
 			};
 
 			$scope.stepButtonDisabled = function(step) {
