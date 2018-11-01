@@ -3,9 +3,11 @@
 
 ## Getting Started
 
-Download [Angular-Bootstrap-Plus][bsplus].
+Install [Angular-Bootstrap-Plus](https://www.npmjs.com/package/angular-bootstrap-plus).
 
-[bsplus]: https://www.npmjs.com/package/angular-bootstrap-plus
+```bash
+npm install angular-bootstrap-plus
+```
 
 In your web page:
 
