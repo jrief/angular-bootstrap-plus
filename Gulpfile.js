@@ -117,9 +117,6 @@ function buildDist() {
 	.pipe(sourcemaps.write('./'))
 	.pipe(gulp.dest(settings.dist));
 
-	gulp.src(['README.md', 'LICENSE'])
-	.pipe(gulp.dest(settings.dist));
-
 	gulp.src(path.join(settings.dist, '**/*'))
 	.pipe(zip(context.archivename))
 	.pipe(gulp.dest(settings.pages));
